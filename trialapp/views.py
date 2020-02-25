@@ -44,6 +44,29 @@ def create_product(request):
     except Exception as e:
         return JsonResponse({'validation':str(e),'status':False})
 
+  #  **************************************************************************************************************
+
+def get_store_by_id(request):
+    response=[]
+    params = json.loads(request.body)
+    store_id = params.get('store_id')
+    try:
+        create_obj = Store.objects.get(id=store_id)
+        response.append ({
+            'store_id':create_obj.id,
+            'store_name':create_obj.store_name,
+            'store_location':create_obj.store_location,
+            'store_city':create_obj.store_city,
+            'store_state':create_obj.store_state
+        })
+        return JsonResponse({'validation':'success','respinse':response,'status':True})
+    
+    except Exception as e:
+        return JsonResponse({'validation':str(e),'status':False})
+
+        #  **************************************************************************************************************
+
+
 
 
 
