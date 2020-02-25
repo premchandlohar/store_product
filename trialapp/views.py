@@ -122,6 +122,24 @@ def get_all_product(request):
         return JsonResponse({'validation':str(e),'status':False})
 
         # ********************************************************************************************************
+def get_products_by_store_id(request):
+    response = []
+    params = json.loads(request.body)
+    store_id = params.get('store_id')
+    store = Store.objects.get(id=store_id)
+    product_qs =Product.objects.filter(store=store)
+    print(product_qs)
+    for obj in product_qs:
+        response.append({
+                'product_id':obj.id,
+                'product_store':obj.store.store_name,
+                'product_name':obj.product_name,
+                'product_quantity':obj.product_quantity,
+                'product_price':obj.product_price
+        })
+    return JsonResponse({'validation':'success','response':response,'status':True})
+
+# ******************************************************************************************************************
 
 
 
