@@ -154,6 +154,32 @@ def delete_product_by_id(reqsuest):
     return JsonResponse({'validation':'success','status':True})
 
     # ***********************************************************************************************************
+def update_store_by_id(request):
+    # response =[]
+    params = json.loads(request.body)
+    store_id = params.get('store_id')
+    store_name = params.get('store_name')
+    store_location = params.get('store_location')
+    store_city = params.get('store_city')
+    store_state = params.get('store_state')
+    update_obj = Store.objects.filter(id = store_id).update(store_name = store_name,
+        store_location = store_location,store_city = store_city,store_state = store_state
+        )
+    
+    # update_obj = Store.objects.filter(id = store_id).update(**params)
+    # for obj in update_obj:
+    #     response.append({
+    #         'store_name': obj.store_name,
+    #         'store_location':obj.store_location,
+    #         'store_city':obj.store_city,
+    #         'store_state':obj.store_state
+    #     })
+    return JsonResponse({'validation':'success','status':True})
+
+    # return JsonResponse({'validation':'success','response':response,'status':True})
+
+    # *************************************************************************************************************
+
 
 
 
