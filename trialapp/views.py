@@ -228,6 +228,24 @@ def update_store_by_field(request):
     return JsonResponse({'validation':'success','status':True}) 
 
     # *************************************************************************************************************8
+def update_product_by_field(request):
+    params = json.loads(request.body)
+    product_id = params.get('product_id')
+    store = params.get('store')
+    product_name = params.get('product_name')
+    product_quantity = params.get('product_quantity')
+    product_price = params.get('product_price')
+    store_obj = Store.objects.get(id=store)
+    obj  = Product.objects.filter(id = product_id)
+
+    obj.store = store_obj
+    obj.product_name =  product_name
+    obj.product_quantity = product_quantity
+    obj.product_price = product_price
+    obj.save()
+    return JsonResponse({'validation':'success','status':True})
+    
+# *****************************************************************************************************8
 
 
 
