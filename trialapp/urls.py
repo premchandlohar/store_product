@@ -18,6 +18,7 @@ urlpatterns = [
     path('update_product_by_field/',views.update_product_by_field),
     path('update_or_create_store_by_id/',views.update_or_create_store_by_id),
     path('update_or_create_product_by_id/',views.update_or_create_product_by_id),
+    path('get_or_create_store_by_id/',views.get_or_create_store_by_id),
 
 
 

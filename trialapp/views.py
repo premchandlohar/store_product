@@ -286,6 +286,33 @@ def update_or_create_product_by_id(request):
     print("status",status)
     return JsonResponse({'validation':'success','response':response,'status':True})
     # **************************************************************************************************************
+def get_or_create_store_by_id(request):
+    with transaction.atomic():
+        response =[]
+        params = json.loads(request.body)
+        store_id = params.get('store_id')
+        store_name = params.get('store_name')
+        store_location = params.get('store_location')
+        store_city = params.get('store_city')
+        store_state = params.get('store_state')
+        get,status = Store.objects.get_or_create( id= store_id,
+                    defaults = {'store_name':store_name,
+                    'store_location' : store_location,
+                    'store_city': store_city,
+                    'store_state' : store_state,
+                })
+            
+        response.append ({
+            'store_id':store_id,
+            'store_name':store_name,
+            'store_location':store_location,
+            'store_city':store_city,
+            'store_state':store_state
+            })
+        print("status",status)
+    return JsonResponse({'validation':'success','response':response,'status':True})
+
+# ****************************************************************************************************************
 
 
 
