@@ -85,6 +85,25 @@ def get_product_by_id(request):
         return JsonResponse({'validation':str(e),'status':False})
 
         # *****************************************************************************************************
+def get_all_store(request):
+    response=[]
+    try:
+        all_store = Store.objects.all()
+        for store in all_store:
+            response.append({
+                'store_id':store.id,
+                'store_name':store.store_name,
+                'store_location':store.store_location,
+                'store_city':store.store_city,
+                'store_state':store.store_state 
+            })
+        return JsonResponse({'validation':'success','response':response,'status':True})
+        
+    except Exception as e:
+        return JsonResponse({'validation':str(e),'status':False})
+
+        # ***************************************************************************************************************
+
 
 
 
