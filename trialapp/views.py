@@ -145,8 +145,15 @@ def delete_store_by_id(reqsuest):
     store_id = params.get('store_id')
     create_obj = Store.objects.get(id=store_id).delete()
     return JsonResponse({'validation':'success','status':True})
-#          
+         
 # ******************************************************************************************************************
+def delete_product_by_id(reqsuest):
+    params = json.loads(reqsuest.body)
+    product_id = params.get('product_id')
+    delete_obj = Product.objects.get(id=product_id).delete()
+    return JsonResponse({'validation':'success','status':True})
+
+    # ***********************************************************************************************************
 
 
 
