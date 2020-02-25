@@ -12,6 +12,7 @@ urlpatterns = [
     path('delete_store_by_id/',views.delete_store_by_id),
     path('delete_product_by_id/',views.delete_product_by_id),
     path('update_store_by_id/',views.update_store_by_id),
+    path('update_product_by_id/',views.update_product_by_id),
 
 
 ]
