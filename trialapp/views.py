@@ -246,6 +246,25 @@ def update_product_by_field(request):
     return JsonResponse({'validation':'success','status':True})
     
 # *****************************************************************************************************8
+def update_or_create_store_by_id(request):
+    params = json.loads(request.body)
+    store_id = params.get('store_id')
+    store_name = params.get('store_name')
+    store_location = params.get('store_location')
+    store_city = params.get('store_city')
+    store_state = params.get('store_state')
+    update,status = Store.objects.update_or_create( id= store_id,
+        
+                defaults = {'store_name':store_name,
+                "store_city": store_city,
+                "store_state" : store_state,
+                "store_location" : store_location
+                }
+            )
+    print("status",status)
+    return JsonResponse({'validation':'success','status':True}) 
+
+#     # *************************************************************************************************************
 
 
 
