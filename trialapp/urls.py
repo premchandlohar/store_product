@@ -3,4 +3,5 @@ from trialapp import views
 
 urlpatterns = [
     path('create_store/', views.create_store),
+    path('create_product/', views.create_product),
 ]

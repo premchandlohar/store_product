@@ -25,6 +25,25 @@ def create_store(request):
         return JsonResponse({'validation':str(e),'status':False})
          
         #  ************************************************************************************************
+def create_product(request):
+    params = json.loads(request.body)
+    store = params.get('store')
+    product_name = params.get('product_name')
+    product_quantity = params.get('product_quantity')
+    product_price = params.get('product_price')
+    try:
+        obj = Store.objects.get(id=store)
+        create_obj = Product.objects.create(
+            store = obj,
+            product_name =    product_name,
+            product_quantity = product_quantity,
+            product_price = product_price
+        )
+        return JsonResponse({'validation':'success','status':True})
+        
+    except Exception as e:
+        return JsonResponse({'validation':str(e),'status':False})
+
 
 
 
