@@ -265,6 +265,27 @@ def update_or_create_store_by_id(request):
     return JsonResponse({'validation':'success','status':True}) 
 
 #     # *************************************************************************************************************
+def update_or_create_product_by_id(request):
+    response = []
+    params = json.loads(request.body)
+    product_id = params.get('product_id')
+    store_id = params.get('store_id')
+    product_name = params.get('product_name')
+    product_quantity = params.get('product_quantity')
+    product_price = params.get('product_price')
+    store_obj = Store.objects.get(id=store_id)
+    update,status  = Product.objects.get_or_create(id = product_id, defaults = {
+        # 'store_name':store_obj.store_name,
+        'product_name':product_name,'product_quantity':product_quantity,'product_price':product_price,
+        'store_id':store_id 
+        })
+    response.append({
+        'store_name':store_obj.store_name,
+        'product_name':product_name,'product_quantity':product_quantity
+        })
+    print("status",status)
+    return JsonResponse({'validation':'success','response':response,'status':True})
+    # **************************************************************************************************************
 
 
 
