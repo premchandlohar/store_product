@@ -33,17 +33,44 @@ def create_store(request):
         #  ************************************************************************************************
 
 def create_category(request):
-    params = json.loads(request.body)
-    category_name = params.get('category_name')
-    store_id = params.get('store_id')
-    print(type(store_id))
-    store_obj = Store.objects.get(id= store_id)
-    print(store_obj)
-    category_obj = Category.objects.create(
-        store = store_obj,
-        category_name = category_name
-    )
-    return JsonResponse({'validation':'success','status':True})
+    try:
+        params = json.loads(request.body)
+        category_name = params.get('category_name')
+        store_id = params.get('store_id')
+        print(type(store_id))
+        store_obj = Store.objects.get(id= store_id)
+        print(store_obj)
+        category_obj = Category.objects.create(
+            store = store_obj,
+            category_name = category_name
+        )
+        return JsonResponse({'validation':'success','status':True})
+
+    except Exception as e:
+        return JsonResponse({'validation':str(e),'status':False})
+
+    # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+def create_subcategory(request):
+    try:
+        params = json.loads(request.body)
+        store_id = params.get('store_id')
+        category_name = params.get('category_name')
+        subcategory_name = params.get('subcategory_name')
+        store_obj = Store.objects.get(id= store_id)
+        category_obj = Category.objects.get(category_name= category_name)
+        subcategory_obj = Subcategory.objects.create(
+            store = store_obj,
+            category = category_obj,
+            subcategory_name = subcategory_name
+        )
+        return JsonResponse({'validation':'success','status':True})
+
+    except Exception as e:
+        return JsonResponse({'validation':str(e),'status':False})
+
+
+
         
 
 

@@ -4,8 +4,9 @@ from trialapp import views
 urlpatterns = [
     path('create_store/', views.create_store),
     path('create_category/', views.create_category),
+    path('create_subcategory/', views.create_subcategory),
+    path('create_product/', views.create_product),
 
-    # path('create_product/', views.create_product),
     # path('get_store_by_id/', views.get_store_by_id),
     # path('get_product_by_id/', views.get_product_by_id),
     # path('get_all_store/',views.get_all_store),
