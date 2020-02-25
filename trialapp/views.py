@@ -209,6 +209,25 @@ def update_product_by_store_id(request):
     return JsonResponse({'validation':'success','status':True}) 
 
 # ****************************************************************************************************************
+def update_store_by_field(request):
+    params = json.loads(request.body)
+    store_id = params.get('store_id')
+    store_name = params.get('store_name')
+    store_location = params.get('store_location')
+    store_city = params.get('store_city')
+    store_state = params.get('store_state')
+    # Store.store_name =  store_name  
+    obj = Store.objects.get(id = store_id)
+    # for obj in object:
+    obj.store_name = store_name
+    obj.store_location = store_location
+    obj.store_city = store_city
+    obj.store_state = store_state
+    obj.save()
+
+    return JsonResponse({'validation':'success','status':True}) 
+
+    # *************************************************************************************************************8
 
 
 

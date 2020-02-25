@@ -14,6 +14,7 @@ urlpatterns = [
     path('update_store_by_id/',views.update_store_by_id),
     path('update_product_by_id/',views.update_product_by_id),
     path('update_product_by_store_id/',views.update_product_by_store_id),
+    path('update_store_by_field/',views.update_store_by_field),
 
 
 ]
