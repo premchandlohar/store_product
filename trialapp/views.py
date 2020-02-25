@@ -66,6 +66,26 @@ def get_store_by_id(request):
 
         #  **************************************************************************************************************
 
+def get_product_by_id(request):
+    response=[]
+    params = json.loads(request.body)
+    product_id = params.get('product_id')
+    try:
+        create_obj = Product.objects.get(id=product_id)
+        response.append ({
+            'store_name':create_obj.store.store_name,
+            'product_id':create_obj.id,
+            'product_name':create_obj.product_name,
+            'product_quantity':create_obj.product_quantity,
+            'product_price':create_obj.product_price
+        })
+        return JsonResponse({'validation':'success','response':response,'status':True})
+    
+    except Exception as e:
+        return JsonResponse({'validation':str(e),'status':False})
+
+        # *****************************************************************************************************
+
 
 
 
