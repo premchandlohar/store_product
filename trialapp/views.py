@@ -103,6 +103,25 @@ def get_all_store(request):
         return JsonResponse({'validation':str(e),'status':False})
 
         # ***************************************************************************************************************
+def get_all_product(request):
+    response=[]
+    try:
+        all_product = Product.objects.all()
+        print(all_product)
+        for product in all_product:
+            response.append({
+                'product_id':product.id,
+                'product_store':product.store.store_name,
+                'product_name':product.product_name,
+                'product_quantity':product.product_quantity,
+                'product_price':product.product_price
+            })
+        return JsonResponse({'validation':'success','response':response,'status':True})
+        
+    except Exception as e:
+        return JsonResponse({'validation':str(e),'status':False})
+
+        # ********************************************************************************************************
 
 
 
