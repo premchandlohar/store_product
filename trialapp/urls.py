@@ -19,6 +19,8 @@ urlpatterns = [
     path('get_products_by_store_id/',views.get_products_by_store_id),
     path('update_store_by_field/',views.update_store_by_field),
     path('update_category_by_field/',views.update_category_by_field),
+    path('update_subcategory_by_field/',views.update_subcategory_by_field),
+    path('update_product_by_field/',views.update_product_by_field),
 
 
     # path('delete_store_by_id/',views.delete_store_by_id),
@@ -26,7 +28,6 @@ urlpatterns = [
     # path('update_store_by_id/',views.update_store_by_id),
     # path('update_product_by_id/',views.update_product_by_id),
     # path('update_product_by_store_id/',views.update_product_by_store_id),
-    # path('update_product_by_field/',views.update_product_by_field),
     # path('update_or_create_product_by_id/',views.update_or_create_product_by_id),
     # path('get_or_create_store_by_id/',views.get_or_create_store_by_id),
     # path('get_or_create_product_by_id/',views.get_or_create_product_by_id),
