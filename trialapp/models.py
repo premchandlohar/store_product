@@ -17,11 +17,29 @@ class Category(models.Model):
     store = models.ForeignKey(Store, on_delete=models.CASCADE)
     category_name = models.CharField(max_length=30)
 
+    def __str__(self):
+        return self.category_name
+
+    class Meta:
+        verbose_name = "Category"
+        verbose_name_plural = "Categories"
+
+
+
 
 class Subcategory(models.Model):
-     store                  = models.ForeignKey(Store, on_delete=models.CASCADE)
-     category               = models.ForeignKey(Category, on_delete=models.CASCADE)
-     subcategory_name       = models.CharField(max_length=30)
+    store                  = models.ForeignKey(Store, on_delete=models.CASCADE)
+    category               = models.ForeignKey(Category, on_delete=models.CASCADE)
+    subcategory_name       = models.CharField(max_length=30)
+    def __str__(self):
+        return self.subcategory_name
+
+    class Meta:
+        verbose_name = "Subcategory"
+        verbose_name_plural = "Subcategories"
+
+
+
 
 class Product(models.Model):
     store                  = models.ForeignKey(Store, on_delete=models.CASCADE)
