@@ -11,8 +11,10 @@ urlpatterns = [
     path('get_subcategory_by_id/', views.get_subcategory_by_id),
     path('get_product_by_id/', views.get_product_by_id),
     path('get_all_store/',views.get_all_store),
-
+    path('get_all_category/',views.get_all_category),
+    # path('get_all_subcategory/',views.get_all_subcategory),
     # path('get_all_product/',views.get_all_product),
+
     # path('get_products_by_store_id/',views.get_products_by_store_id),
     # path('delete_store_by_id/',views.delete_store_by_id),
     # path('delete_product_by_id/',views.delete_product_by_id),

@@ -233,6 +233,25 @@ def get_all_store(request):
     except Exception as e:
         return JsonResponse({'validation':str(e),'status':False})
         
+# ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+def get_all_category(request):
+    response = []
+
+    try:
+
+        category_obj = Category.objects.all()
+        for category in category_obj:
+            response.append({
+                'store_id':category.store.id,
+                'store_name':category.store.store_name,
+                'category_id':category.id,
+                'category_name':category.category_name
+            })
+        return JsonResponse({'validation':'success','respinse':response,'status':True})
+    except Exception as e:
+        return JsonResponse({'validation':str(e),'status':False})
+    
 
 
 
