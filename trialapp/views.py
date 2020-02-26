@@ -349,11 +349,15 @@ def get_products_by_store_id(request):
 
     response = []
     store_id = params.get('store_id')
+    # or
+    # subcategory_id = params.get('subcategory_id')
 
     try:
         
         # store_obj = Store.objects.get(id=store_id)
         product_qs = Product.objects.filter(store = store_id)
+
+        # product_qs = Product.objects.filter(subcategory = subcategory_id)
         for product in product_qs:
             response.append({
                 'store_id': product.store.id,
@@ -373,7 +377,35 @@ def get_products_by_store_id(request):
         # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
         
+def update_store_by_field(request):
+    params = json.loads(request.body)
+
+    store_id = params.get('store_id')
+    store_name = params.get('store_name')
+    store_location = params.get('store_location')
+    store_address = params.get('store_location')
+    store_latitude = params.get('store_latitude')
+    store_longitude = params.get('store_longitude')
+    store_city = params.get('store_city')
+    store_state = params.get('store_state')
     
+    try:
+        with transaction.atomic():
+            store_obj = Store.objects.get(id = store_id)
+            store_obj.id = store_id
+            store_obj.store_name = store_name
+            store_obj.store_location = store_location
+            store_obj.store_address = store_address
+            store_obj.store_latitude = store_latitude
+            store_obj.store_longitude = store_longitude
+            store_obj.store_city = store_city
+            store_obj.store_state = store_state
+            store_obj.save()
+            return JsonResponse({'validation':'success','status':True})
+    except Exception as e:
+        return JsonResponse({'validation':str(e),'status':False})
+
+
 
 
         
