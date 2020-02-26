@@ -123,23 +123,73 @@ def get_store_by_id(request):
     store_id = params.get('store_id')
 
     try:
-        with transaction.atomic():
+        # with transaction.atomic():
 
-            store_obj = Store.objects.get(id=store_id)
-            response.append ({
-                'store_id':store_obj.id,
-                'store_name':store_obj.store_name,
-                'store_location':store_obj.store_location,
-                'store_address':store_obj.store_address,
-                'store_latitude':store_obj.store_latitude,
-                'store_longitude':store_obj.store_longitude,
-                'store_location':store_obj.store_location,
-                'store_city':store_obj.store_city,
-                'store_state':store_obj.store_state
-            })
-            return JsonResponse({'validation':'success','respinse':response,'status':True})
+        store_obj = Store.objects.get(id=store_id)
+        response.append ({
+            'store_id':store_obj.id,
+            'store_name':store_obj.store_name,
+            'store_location':store_obj.store_location,
+            'store_address':store_obj.store_address,
+            'store_latitude':store_obj.store_latitude,
+            'store_longitude':store_obj.store_longitude,
+            'store_location':store_obj.store_location,
+            'store_city':store_obj.store_city,
+            'store_state':store_obj.store_state
+        })
+        return JsonResponse({'validation':'success','respinse':response,'status':True})
     except Exception as e:
         return JsonResponse({'validation':str(e),'status':False})
+
+# ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+def get_category_by_id(request):
+    params = json.loads(request.body)
+
+    response = []
+    category_id = params.get('category_id')
+
+    try:
+
+        category_obj = Category.objects.get(id=category_id)
+        print(category_obj)
+        response.append({
+            'store_id':category_obj.store.id,
+            'store_name':category_obj.store.store_name,
+            'category_name':category_obj.category_name
+        })
+        return JsonResponse({'validation':'success','respinse':response,'status':True})
+    except Exception as e:
+        return JsonResponse({'validation':str(e),'status':False})
+    # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+def get_subcategory_by_id(request):
+    params = json.loads(request.body)
+
+    response = []
+    subcategory_id = params.get('subcategory_id')
+
+    try:
+        
+        subcategory_obj = Subcategory.objects.get(id=subcategory_id)
+        response.append({
+            'store_id': subcategory_obj.store.id,
+            'store_name': subcategory_obj.store.store_name,
+            'category_id':subcategory_obj.category.id,
+            'category_name': subcategory_obj.category.category_name,
+            'subcategory_id': subcategory_obj.id,
+            'subcategory_name':subcategory_obj.subcategory_name
+        })
+        return JsonResponse({'validation':'success','respinse':response,'status':True})
+    except Exception as e:
+        return JsonResponse({'validation':str(e),'status':False})
+
+
+
+        
+
+
+
         
 
 
