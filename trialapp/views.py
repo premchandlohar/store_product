@@ -252,7 +252,25 @@ def get_all_category(request):
     except Exception as e:
         return JsonResponse({'validation':str(e),'status':False})
     
+# ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
+def get_all_subcategory(request):
+    response = []
+
+    try:
+
+        subcategory_obj = Subcategory.objects.all()
+        for subcategory in subcategory_obj:
+            response.append({
+                'store_id':subcategory.store.id,
+                'store_name':subcategory.store.store_name,
+                'subcategory_id':subcategory.id,
+                'subcategory_name':subcategory.subcategory_name
+            })
+        return JsonResponse({'validation':'success','respinse':response,'status':True})
+    except Exception as e:
+        return JsonResponse({'validation':str(e),'status':False})
+    
 
 
         
