@@ -458,35 +458,39 @@ def update_subcategory_by_field(request):
         return JsonResponse({'validation':str(e),'status':False})
 #         # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-# def create_product(request):
-#     params = json.loads(request.body)
+def update_product_by_field(request):
+    params = json.loads(request.body)
 
-#     store_id = params.get('store_id')
-#     subcategory_id = params.get('subcategory_id')
-#     product_name = params.get('product_name')
-#     product_quantity = params.get('product_quantity')
-#     product_price  = params.get('product_price')
-#     product_discount_price = params.get('product_discount_price')
-#     product_description= params.get('product_description')
+    # store_id = params.get('store_id')
+    product_id = params.get('product_id')
+    subcategory_id = params.get('subcategory_id')
+    product_name = params.get('product_name')
+    product_quantity = params.get('product_quantity')
+    product_price  = params.get('product_price')
+    product_discount_price = params.get('product_discount_price')
+    product_description= params.get('product_description')
 
-#     store_obj = Store.objects.get(id= store_id)
-#     subcategory_obj = Subcategory.objects.get(id= subcategory_id)
+    # store_obj = Store.objects.get(id= store_id)
+    subcategory_obj = Subcategory.objects.get(id= subcategory_id)
 
-#     try:
-#         with transaction.atomic():
+    try:
+        with transaction.atomic():
 
-#             product_obj = Product.objects.create(
-#                 store = store_obj,
-#                 subcategory = subcategory_obj,
-#                 product_name = product_name,
-#                 product_quantity = product_quantity,
-#                 product_price = product_price,
-#                 product_discount_price = product_discount_price,
-#                 product_description = product_description,
-#             )
-#             return JsonResponse({'validation':'success','status':True})
-#     except Exception as e:
-#         return JsonResponse({'validation':str(e),'status':False})
+            product_obj = Product.objects.get(id = product_id)
+            print(product_obj)
+                # product_obj.store = store_obj,
+            product_obj.subcategory = subcategory_obj
+            product_obj.id = product_id
+            product_obj.product_name = product_name
+            product_obj.product_quantity = product_quantity
+            product_obj.product_price = product_price
+            product_obj.product_discount_price = product_discount_price
+            product_obj.product_description = product_description
+            product_obj.save()
+            
+            return JsonResponse({'validation':'success','status':True})
+    except Exception as e:
+        return JsonResponse({'validation':str(e),'status':False})
 
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         
