@@ -137,7 +137,7 @@ def get_store_by_id(request):
             'store_city':store_obj.store_city,
             'store_state':store_obj.store_state
         })
-        return JsonResponse({'validation':'success','respinse':response,'status':True})
+        return JsonResponse({'validation':'success','response':response,'status':True})
     except Exception as e:
         return JsonResponse({'validation':str(e),'status':False})
 
@@ -158,7 +158,7 @@ def get_category_by_id(request):
             'store_name':category_obj.store.store_name,
             'category_name':category_obj.category_name
         })
-        return JsonResponse({'validation':'success','respinse':response,'status':True})
+        return JsonResponse({'validation':'success','response':response,'status':True})
     except Exception as e:
         return JsonResponse({'validation':str(e),'status':False})
     # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -180,7 +180,7 @@ def get_subcategory_by_id(request):
             'subcategory_id': subcategory_obj.id,
             'subcategory_name':subcategory_obj.subcategory_name
         })
-        return JsonResponse({'validation':'success','respinse':response,'status':True})
+        return JsonResponse({'validation':'success','response':response,'status':True})
     except Exception as e:
         return JsonResponse({'validation':str(e),'status':False})
 
@@ -200,13 +200,14 @@ def get_product_by_id(request):
             'store_name': product_obj.store.store_name,
             'subcategory_id': product_obj.subcategory.id,
             'subcategory_name':product_obj.subcategory.subcategory_name,
+            'product_id': product_obj.id,
             'product_name' :  product_obj.product_name,     
             'product_quantity' :  product_obj.product_quantity,
             'product_price' :  product_obj.product_price,       
             'product_discount_price' :  product_obj.product_discount_price,
             'product_description' :  product_obj.product_description
         })
-        return JsonResponse({'validation':'success','respinse':response,'status':True})
+        return JsonResponse({'validation':'success','response':response,'status':True})
     except Exception as e:
         return JsonResponse({'validation':str(e),'status':False})
         # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -248,7 +249,7 @@ def get_all_category(request):
                 'category_id':category.id,
                 'category_name':category.category_name
             })
-        return JsonResponse({'validation':'success','respinse':response,'status':True})
+        return JsonResponse({'validation':'success','response':response,'status':True})
     except Exception as e:
         return JsonResponse({'validation':str(e),'status':False})
     
@@ -267,9 +268,60 @@ def get_all_subcategory(request):
                 'subcategory_id':subcategory.id,
                 'subcategory_name':subcategory.subcategory_name
             })
-        return JsonResponse({'validation':'success','respinse':response,'status':True})
+        return JsonResponse({'validation':'success','response':response,'status':True})
     except Exception as e:
         return JsonResponse({'validation':str(e),'status':False})
+    
+    # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+def get_all_product(request):
+    response = []
+
+    try:
+
+        product_obj = Product.objects.all()
+        for product in product_obj:
+                response.append({
+                # 'store_id': product_obj.store.id,
+                'store_name': product.store.store_name,
+                # 'subcategory_id': product_obj.subcategory.id,
+                'subcategory_name':product.subcategory.subcategory_name,
+                'product_id': product.id,
+                'product_name' :  product.product_name,     
+                'product_quantity' :  product.product_quantity,
+                'product_price' :  product.product_price,       
+                'product_discount_price' :  product.product_discount_price,
+                'product_description' :  product.product_description
+            })
+        return JsonResponse({'validation':'success','response':response,'status':True})
+    except Exception as e:
+        return JsonResponse({'validation':str(e),'status':False})
+
+# ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+def get_category_by_store_id(request):
+    response = []
+    params = json.loads(request.body)
+
+    store_id = params.get('store_id')
+
+    try:
+        store_obj = Store.objects.get(id= store_id)
+        category_qs = Category.objects.filter(store = store_obj)
+        for category in category_qs:
+            response.append({
+                'store_id':category.store.id,
+                'store_name':category.store.store_name,
+                'category_id':category.id,
+                'category_name':category.category_name
+            })
+        return JsonResponse({'validation':'success','response':response,'status':True})
+    except Exception as e:
+        return JsonResponse({'validation':str(e),'status':False})
+    
+            
+
+        
     
 
 
