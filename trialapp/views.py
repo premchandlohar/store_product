@@ -344,6 +344,33 @@ def get_subcategory_by_category_id(request):
     # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     
             
+def get_products_by_store_id(request):
+    params = json.loads(request.body)
+
+    response = []
+    store_id = params.get('store_id')
+
+    try:
+        
+        # store_obj = Store.objects.get(id=store_id)
+        product_qs = Product.objects.filter(store = store_id)
+        for product in product_qs:
+            response.append({
+                'store_id': product.store.id,
+                'store_name': product.store.store_name,
+                'subcategory_id': product.subcategory.id,
+                'subcategory_name':product.subcategory.subcategory_name,
+                'product_id': product.id,
+                'product_name' : product.product_name,     
+                'product_quantity' : product.product_quantity,
+                'product_price' : product.product_price,       
+                'product_discount_price' : product.product_discount_price,
+                'product_description' : product.product_description
+            })
+        return JsonResponse({'validation':'success','response':response,'status':True})
+    except Exception as e:
+        return JsonResponse({'validation':str(e),'status':False})
+        # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
         
     
