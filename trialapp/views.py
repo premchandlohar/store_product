@@ -319,6 +319,30 @@ def get_category_by_store_id(request):
     except Exception as e:
         return JsonResponse({'validation':str(e),'status':False})
     
+    # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+def get_subcategory_by_category_id(request):
+    response = []
+    params = json.loads(request.body)
+
+    category_id = params.get('category_id')
+
+    try:
+        category_obj = Category.objects.get(id= category_id)
+        subcategory_qs = Subcategory.objects.filter(category = category_obj)
+        for subcategory in subcategory_qs:
+            response.append({
+                'category_id':subcategory.category.id,
+                'category_name':subcategory.category.category_name,
+                'subcategory_id':subcategory.id,
+                'subcategory_name':subcategory.subcategory_name
+            })
+        return JsonResponse({'validation':'success','response':response,'status':True})
+    except Exception as e:
+        return JsonResponse({'validation':str(e),'status':False})
+
+    # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    
             
 
         
