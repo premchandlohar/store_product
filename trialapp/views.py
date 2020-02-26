@@ -184,6 +184,31 @@ def get_subcategory_by_id(request):
     except Exception as e:
         return JsonResponse({'validation':str(e),'status':False})
 
+# +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+def get_product_by_id(request):
+    params = json.loads(request.body)
+
+    response = []
+    product_id = params.get('product_id')
+
+    try:
+        
+        product_obj = Product.objects.get(id=product_id)
+        response.append({
+            'store_id': product_obj.store.id,
+            'store_name': product_obj.store.store_name,
+            'subcategory_id': product_obj.subcategory.id,
+            'subcategory_name':product_obj.subcategory.subcategory_name,
+            'product_name' :  product_obj.product_name,     
+            'product_quantity' :  product_obj.product_quantity,
+            'product_price' :  product_obj.product_price,       
+            'product_discount_price' :  product_obj.product_discount_price,
+            'product_description' :  product_obj.product_description
+        })
+        return JsonResponse({'validation':'success','respinse':response,'status':True})
+    except Exception as e:
+        return JsonResponse({'validation':str(e),'status':False})
 
 
         
