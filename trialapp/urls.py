@@ -18,6 +18,8 @@ urlpatterns = [
     path('get_subcategory_by_category_id/',views.get_subcategory_by_category_id),
     path('get_products_by_store_id/',views.get_products_by_store_id),
     path('update_store_by_field/',views.update_store_by_field),
+    path('update_category_by_field/',views.update_category_by_field),
+
 
     # path('delete_store_by_id/',views.delete_store_by_id),
     # path('delete_product_by_id/',views.delete_product_by_id),

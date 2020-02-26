@@ -405,6 +405,91 @@ def update_store_by_field(request):
     except Exception as e:
         return JsonResponse({'validation':str(e),'status':False})
 
+# ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+def update_category_by_field(request):
+    params = json.loads(request.body)
+    
+    category_id = params.get('category_id')
+    store_id = params.get('store_id')
+    category_name = params.get('category_name')
+
+    store_obj = Store.objects.get(id= store_id)
+
+    try:
+        with transaction.atomic():
+
+            category_obj = Category.objects.get(id = category_id)
+
+            category_obj.store = store_obj
+            print(category_obj.store)
+            category_obj.id = category_id
+            category_obj.category_name = category_name
+            category_obj.save()
+            return JsonResponse({'validation':'success','status':True})
+    except Exception as e:
+        return JsonResponse({'validation':str(e),'status':False})
+
+
+    # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+# def create_subcategory(request):
+#     params = json.loads(request.body)
+
+    
+#     store_id = params.get('store_id')
+#     category_id = params.get('category_id')
+#     subcategory_name = params.get('subcategory_name')
+
+#     store_obj = Store.objects.get(id= store_id)
+#     category_obj = Category.objects.get(id= category_id)
+
+#     try:
+#         with transaction.atomic():
+
+#             subcategory_obj = Subcategory.objects.create(
+#                 store = store_obj,
+#                 category = category_obj,
+#                 subcategory_name = subcategory_name
+#             )
+#             return JsonResponse({'validation':'success','status':True})
+#     except Exception as e:
+#         return JsonResponse({'validation':str(e),'status':False})
+#         # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+# def create_product(request):
+#     params = json.loads(request.body)
+
+#     store_id = params.get('store_id')
+#     subcategory_id = params.get('subcategory_id')
+#     product_name = params.get('product_name')
+#     product_quantity = params.get('product_quantity')
+#     product_price  = params.get('product_price')
+#     product_discount_price = params.get('product_discount_price')
+#     product_description= params.get('product_description')
+
+#     store_obj = Store.objects.get(id= store_id)
+#     subcategory_obj = Subcategory.objects.get(id= subcategory_id)
+
+#     try:
+#         with transaction.atomic():
+
+#             product_obj = Product.objects.create(
+#                 store = store_obj,
+#                 subcategory = subcategory_obj,
+#                 product_name = product_name,
+#                 product_quantity = product_quantity,
+#                 product_price = product_price,
+#                 product_discount_price = product_discount_price,
+#                 product_description = product_description,
+#             )
+#             return JsonResponse({'validation':'success','status':True})
+#     except Exception as e:
+#         return JsonResponse({'validation':str(e),'status':False})
+
+# +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        
+
 
 
 
