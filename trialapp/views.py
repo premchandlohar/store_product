@@ -442,8 +442,20 @@ def delete_store_by_id(request):
     except Exception as e:
         return JsonResponse({'validation':str(e),'status':False})
 
+    # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
+def delete_category_by_id(request):
+    params = json.loads(request.body)
 
+    category_id = params.get('category_id')
+
+    try:
+        category_obj = Category.objects.get(id= category_id).delete()
+        return JsonResponse({'validation':'success','status':True})
+    except Exception as e:
+        return JsonResponse({'validation':str(e),'status':False})
+    
+    # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 
 
