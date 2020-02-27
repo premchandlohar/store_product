@@ -126,17 +126,7 @@ def get_store_by_id(request):
         # with transaction.atomic():
 
         store_obj = Store.objects.get(id=store_id)
-        response.append ({
-            'store_id':store_obj.id,
-            'store_name':store_obj.store_name,
-            'store_location':store_obj.store_location,
-            'store_address':store_obj.store_address,
-            'store_latitude':store_obj.store_latitude,
-            'store_longitude':store_obj.store_longitude,
-            'store_location':store_obj.store_location,
-            'store_city':store_obj.store_city,
-            'store_state':store_obj.store_state
-        })
+        response.append(store_obj.get_json())
         return JsonResponse({'validation':'success','response':response,'status':True})
     except Exception as e:
         return JsonResponse({'validation':str(e),'status':False})
@@ -152,12 +142,7 @@ def get_category_by_id(request):
     try:
 
         category_obj = Category.objects.get(id=category_id)
-        print(category_obj)
-        response.append({
-            'store_id':category_obj.store.id,
-            'store_name':category_obj.store.store_name,
-            'category_name':category_obj.category_name
-        })
+        response.append(category_obj.get_json())
         return JsonResponse({'validation':'success','response':response,'status':True})
     except Exception as e:
         return JsonResponse({'validation':str(e),'status':False})
@@ -172,14 +157,7 @@ def get_subcategory_by_id(request):
     try:
         
         subcategory_obj = Subcategory.objects.get(id=subcategory_id)
-        response.append({
-            'store_id': subcategory_obj.store.id,
-            'store_name': subcategory_obj.store.store_name,
-            'category_id':subcategory_obj.category.id,
-            'category_name': subcategory_obj.category.category_name,
-            'subcategory_id': subcategory_obj.id,
-            'subcategory_name':subcategory_obj.subcategory_name
-        })
+        response.append(subcategory_obj.get_json())
         return JsonResponse({'validation':'success','response':response,'status':True})
     except Exception as e:
         return JsonResponse({'validation':str(e),'status':False})
@@ -195,18 +173,7 @@ def get_product_by_id(request):
     try:
         
         product_obj = Product.objects.get(id=product_id)
-        response.append({
-            'store_id': product_obj.store.id,
-            'store_name': product_obj.store.store_name,
-            'subcategory_id': product_obj.subcategory.id,
-            'subcategory_name':product_obj.subcategory.subcategory_name,
-            'product_id': product_obj.id,
-            'product_name' :  product_obj.product_name,     
-            'product_quantity' :  product_obj.product_quantity,
-            'product_price' :  product_obj.product_price,       
-            'product_discount_price' :  product_obj.product_discount_price,
-            'product_description' :  product_obj.product_description
-        })
+        response.append(product_obj.get_json())
         return JsonResponse({'validation':'success','response':response,'status':True})
     except Exception as e:
         return JsonResponse({'validation':str(e),'status':False})
