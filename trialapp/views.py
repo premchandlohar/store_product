@@ -186,13 +186,12 @@ def get_all_store(request):
 
         all_store = Store.objects.all()
         for store in all_store:
-            response.append(all_store.get_json())
+            response.append(store.get_json())
                
         return JsonResponse({'validation':'success','response':response,'status':True})
     except Exception as e:
         return JsonResponse({'validation':str(e),'status':False})
-        
-# ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        #  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 def get_all_category(request):
     response = []
@@ -234,7 +233,7 @@ def get_all_product(request):
     except Exception as e:
         return JsonResponse({'validation':str(e),'status':False})
 
-# ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 def get_category_by_store_id(request):
     response = []
@@ -342,7 +341,7 @@ def update_store_by_field(request):
     except Exception as e:
         return JsonResponse({'validation':str(e),'status':False})
 
-# ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+      #   ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 def update_category_by_field(request):
     params = json.loads(request.body)
@@ -393,9 +392,10 @@ def update_subcategory_by_field(request):
             return JsonResponse({'validation':'success','status':True})
     except Exception as e:
         return JsonResponse({'validation':str(e),'status':False})
-#         # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+     #         # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 def update_product_by_field(request):
+
     params = json.loads(request.body)
 
     # store_id = params.get('store_id')
@@ -429,8 +429,20 @@ def update_product_by_field(request):
     except Exception as e:
         return JsonResponse({'validation':str(e),'status':False})
 
-# +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+     # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         
+def delete_store_by_id(request):
+    params = json.loads(request.body)
+
+    store_id = params.get('store_id')
+
+    try:
+        store_obj = Store.objects.get(id= store_id).delete()
+        return JsonResponse({'validation':'success','status':True})
+    except Exception as e:
+        return JsonResponse({'validation':str(e),'status':False})
+
+
 
 
 
