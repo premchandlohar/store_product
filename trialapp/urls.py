@@ -23,6 +23,7 @@ urlpatterns = [
     path('update_product_by_field/',views.update_product_by_field),
     path('delete_store_by_id/',views.delete_store_by_id),
     path('delete_category_by_id/',views.delete_category_by_id),
+    path('delete_subcategory_by_id/',views.delete_subcategory_by_id),
 
     # path('delete_product_by_id/',views.delete_product_by_id),
     # path('update_store_by_id/',views.update_store_by_id),

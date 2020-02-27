@@ -227,6 +227,7 @@ def get_all_product(request):
     try:
 
         product_obj = Product.objects.all()
+        print(product_obj)
         for product in product_obj:
                 response.append(product.get_all_product())
         return JsonResponse({'validation':'success','response':response,'status':True})
@@ -457,6 +458,18 @@ def delete_category_by_id(request):
     
     # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
+def delete_subcategory_by_id(request):
+    params = json.loads(request.body)
+
+    subcategory_id = params.get('subcategory_id')
+
+    try:
+        subcategory_obj = Subcategory.objects.get(id= subcategory_id).delete()
+        return JsonResponse({'validation':'success','status':True})
+    except Exception as e:
+        return JsonResponse({'validation':str(e),'status':False})
+    
+    # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 
         
