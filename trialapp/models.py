@@ -43,6 +43,14 @@ class Category(models.Model):
         return {
             'store_id':self.store.id,
             'store_name':self.store.store_name,
+            'category_id':self.id,
+            'category_name':self.category_name
+        }
+
+    def get_all_category(self):
+        return {
+            'store_name':self.store.store_name,
+            'category_id':self.id,
             'category_name':self.category_name
         }
 
@@ -70,6 +78,14 @@ class Subcategory(models.Model):
             'subcategory_id': self.id,
             'subcategory_name':self.subcategory_name
         }
+
+    def get_all_subcategory(self):
+        return {
+                'store_name':self.store.store_name,
+                'category_name':self.category.category_name,
+                'subcategory_id':self.id,
+                'subcategory_name':self.subcategory_name
+            }
 
 
 
@@ -100,6 +116,14 @@ class Product(models.Model):
             'product_price' : self.product_price,       
             'product_discount_price' : self.product_discount_price,
             'product_description' : self.product_description
+        }
+
+    def get_all_product(self):
+        return {
+            'store_name': self.store.store_name,
+            'product_id': self.id,
+            'product_name' : self.product_name,     
+            'product_price' : self.product_price,
         }
 
 

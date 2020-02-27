@@ -113,7 +113,7 @@ def create_product(request):
     except Exception as e:
         return JsonResponse({'validation':str(e),'status':False})
 
-# +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         
 
 def get_store_by_id(request):
@@ -131,7 +131,7 @@ def get_store_by_id(request):
     except Exception as e:
         return JsonResponse({'validation':str(e),'status':False})
 
-# ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 def get_category_by_id(request):
     params = json.loads(request.body)
@@ -162,7 +162,7 @@ def get_subcategory_by_id(request):
     except Exception as e:
         return JsonResponse({'validation':str(e),'status':False})
 
-# +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+     # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 def get_product_by_id(request):
     params = json.loads(request.body)
@@ -186,17 +186,8 @@ def get_all_store(request):
 
         all_store = Store.objects.all()
         for store in all_store:
-            response.append({
-                'store_id':store.id,
-                'store_name':store.store_name,
-                'store_location':store.store_location,
-                'store_address':store.store_address,
-                'store_latitude':store.store_latitude,
-                'store_longitude':store.store_longitude,
-                'store_location':store.store_location,
-                'store_city':store.store_city,
-                'store_state':store.store_state 
-            })
+            response.append(all_store.get_json())
+               
         return JsonResponse({'validation':'success','response':response,'status':True})
     except Exception as e:
         return JsonResponse({'validation':str(e),'status':False})
@@ -210,17 +201,12 @@ def get_all_category(request):
 
         category_obj = Category.objects.all()
         for category in category_obj:
-            response.append({
-                'store_id':category.store.id,
-                'store_name':category.store.store_name,
-                'category_id':category.id,
-                'category_name':category.category_name
-            })
+            response.append(category.get_all_category())
         return JsonResponse({'validation':'success','response':response,'status':True})
     except Exception as e:
         return JsonResponse({'validation':str(e),'status':False})
     
-# ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 def get_all_subcategory(request):
     response = []
@@ -229,12 +215,7 @@ def get_all_subcategory(request):
 
         subcategory_obj = Subcategory.objects.all()
         for subcategory in subcategory_obj:
-            response.append({
-                'store_id':subcategory.store.id,
-                'store_name':subcategory.store.store_name,
-                'subcategory_id':subcategory.id,
-                'subcategory_name':subcategory.subcategory_name
-            })
+            response.append(subcategory.get_all_subcategory())
         return JsonResponse({'validation':'success','response':response,'status':True})
     except Exception as e:
         return JsonResponse({'validation':str(e),'status':False})
@@ -248,18 +229,7 @@ def get_all_product(request):
 
         product_obj = Product.objects.all()
         for product in product_obj:
-                response.append({
-                # 'store_id': product_obj.store.id,
-                'store_name': product.store.store_name,
-                # 'subcategory_id': product_obj.subcategory.id,
-                'subcategory_name':product.subcategory.subcategory_name,
-                'product_id': product.id,
-                'product_name' :  product.product_name,     
-                'product_quantity' :  product.product_quantity,
-                'product_price' :  product.product_price,       
-                'product_discount_price' :  product.product_discount_price,
-                'product_description' :  product.product_description
-            })
+                response.append(product.get_all_product())
         return JsonResponse({'validation':'success','response':response,'status':True})
     except Exception as e:
         return JsonResponse({'validation':str(e),'status':False})
