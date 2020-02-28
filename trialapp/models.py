@@ -9,6 +9,7 @@ class Store(models.Model):
     store_longitude= models.DecimalField( max_digits=6, decimal_places=2)
     store_city = models.CharField(max_length=30)
     store_state = models.CharField(max_length=30)
+    store_image = models.ImageField(upload_to ='uploads/%Y/%m/%d/',null = True,blank= True)
 
     def __str__(self):
         return self.store_name
@@ -22,7 +23,8 @@ class Store(models.Model):
             'store_latitude':self.store_latitude,
             'store_longitude':self.store_longitude,
             'store_city':self.store_city,
-            'store_state':self.store_state
+            'store_state':self.store_state,
+            'store_image':str(self.store_image),
         }
 
         
@@ -98,6 +100,7 @@ class Product(models.Model):
     product_price          = models.FloatField()
     product_discount_price = models.FloatField()
     product_description    = models.TextField(max_length=801)
+    product_image          = models.ImageField(upload_to = 'uploads',null = True,blank= True)
     
     def __str__(self):
         return self.product_name
@@ -115,7 +118,8 @@ class Product(models.Model):
             'product_quantity' : self.product_quantity,
             'product_price' : self.product_price,       
             'product_discount_price' : self.product_discount_price,
-            'product_description' : self.product_description
+            'product_description' : self.product_description,
+            'product_image':str(self.product_image)
         }
 
     def get_all_product(self):
@@ -124,6 +128,7 @@ class Product(models.Model):
             'product_id': self.id,
             'product_name' : self.product_name,     
             'product_price' : self.product_price,
+            'product_image' : str(self.product_image)
         }
 
 

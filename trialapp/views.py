@@ -2,12 +2,13 @@ from django.http import JsonResponse
 from trialapp.models import *
 import json
 from django.db import transaction
+# from PIL import Image
 
 
 # Create your views here.
 
 def create_store(request):
-    params = json.loads(request.body)
+    params = request.POST
 
     store_name = params.get('store_name')
     store_location = params.get('store_location')
@@ -16,6 +17,7 @@ def create_store(request):
     store_longitude = params.get('store_longitude')
     store_city = params.get('store_city')
     store_state = params.get('store_state')
+    store_image = request.FILES.get('store_image')
 
     try:
         with transaction.atomic():
@@ -27,7 +29,8 @@ def create_store(request):
                 store_latitude =  store_latitude,
                 store_longitude = store_longitude,
                 store_city = store_city,
-                store_state = store_state
+                store_state = store_state,
+                store_image = store_image
             )
             return JsonResponse({'validation':'success','status':True})
     except Exception as e:
@@ -84,7 +87,7 @@ def create_subcategory(request):
         # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 def create_product(request):
-    params = json.loads(request.body)
+    params = request.POST
 
     store_id = params.get('store_id')
     subcategory_id = params.get('subcategory_id')
@@ -92,7 +95,8 @@ def create_product(request):
     product_quantity = params.get('product_quantity')
     product_price  = params.get('product_price')
     product_discount_price = params.get('product_discount_price')
-    product_description= params.get('product_description')
+    product_description = params.get('product_description')
+    product_image = request.FILES.get('product_image')
 
     store_obj = Store.objects.get(id= store_id)
     subcategory_obj = Subcategory.objects.get(id= subcategory_id)
@@ -108,6 +112,7 @@ def create_product(request):
                 product_price = product_price,
                 product_discount_price = product_discount_price,
                 product_description = product_description,
+                product_image = product_image
             )
             return JsonResponse({'validation':'success','status':True})
     except Exception as e:

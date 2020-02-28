@@ -1,5 +1,7 @@
 from django.urls import path
 from trialapp import views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('create_store/', views.create_store),
@@ -25,6 +27,7 @@ urlpatterns = [
     path('delete_category_by_id/',views.delete_category_by_id),
     path('delete_subcategory_by_id/',views.delete_subcategory_by_id),
 
+
     # path('delete_product_by_id/',views.delete_product_by_id),
     # path('update_store_by_id/',views.update_store_by_id),
     # path('update_product_by_id/',views.update_product_by_id),
@@ -35,4 +38,4 @@ urlpatterns = [
 
 
 
-]
+]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
