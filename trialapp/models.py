@@ -27,12 +27,11 @@ class Store(models.Model):
             'store_image':str(self.store_image),
         }
 
-        
-    
-
+         
 class Category(models.Model):
     store = models.ForeignKey(Store, on_delete=models.CASCADE)
     category_name = models.CharField(max_length=30)
+    category_image = models.ImageField(upload_to = 'uploads',null = True)
 
     def __str__(self):
         return self.category_name
@@ -46,16 +45,18 @@ class Category(models.Model):
             'store_id':self.store.id,
             'store_name':self.store.store_name,
             'category_id':self.id,
-            'category_name':self.category_name
+            'category_name':self.category_name,
+            'category_image':str(self.category_image)
+
         }
 
     def get_all_category(self):
         return {
             'store_name':self.store.store_name,
             'category_id':self.id,
-            'category_name':self.category_name
+            'category_name':self.category_name,
+            'category_image':str(self.category_image)
         }
-
 
 
 
@@ -63,6 +64,7 @@ class Subcategory(models.Model):
     store                  = models.ForeignKey(Store, on_delete=models.CASCADE)
     category               = models.ForeignKey(Category, on_delete=models.CASCADE)
     subcategory_name       = models.CharField(max_length=30)
+    subcategory_image      = models.ImageField(upload_to = 'uploads',null = True) 
 
     def __str__(self):
         return self.subcategory_name
@@ -78,7 +80,8 @@ class Subcategory(models.Model):
             'category_id':self.category.id,
             'category_name': self.category.category_name,
             'subcategory_id': self.id,
-            'subcategory_name':self.subcategory_name
+            'subcategory_name': self.subcategory_name,
+            'subcategory_image': str(self.subcategory_image)
         }
 
     def get_all_subcategory(self):
@@ -86,10 +89,9 @@ class Subcategory(models.Model):
                 'store_name':self.store.store_name,
                 'category_name':self.category.category_name,
                 'subcategory_id':self.id,
-                'subcategory_name':self.subcategory_name
+                'subcategory_name':self.subcategory_name,
+                'subcategory_image': str(self.subcategory_image)
             }
-
-
 
 
 class Product(models.Model):
@@ -105,7 +107,7 @@ class Product(models.Model):
     def __str__(self):
         return self.product_name
  
-#    class instance method 
+    #    class instance method 
 
     def get_json(self):
         return {

@@ -39,11 +39,11 @@ def create_store(request):
         #  ************************************************************************************************
 
 def create_category(request):
-    params = json.loads(request.body)
+    params = request.POST
     
-    category_name = params.get('category_name')
     store_id = params.get('store_id')
-    print(type(store_id))
+    category_name = params.get('category_name')
+    category_image = request.FILES.get('category_image')
 
     store_obj = Store.objects.get(id= store_id)
     print(store_obj)
@@ -53,7 +53,8 @@ def create_category(request):
 
             category_obj = Category.objects.create(
                 store = store_obj,
-                category_name = category_name
+                category_name = category_name,
+                category_image = category_image
             )
             return JsonResponse({'validation':'success','status':True})
     except Exception as e:
@@ -63,12 +64,13 @@ def create_category(request):
     # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 def create_subcategory(request):
-    params = json.loads(request.body)
+    params = request.POST
 
     
     store_id = params.get('store_id')
     category_id = params.get('category_id')
     subcategory_name = params.get('subcategory_name')
+    subcategory_image = request.FILES.get('subcategory_image')
 
     store_obj = Store.objects.get(id= store_id)
     category_obj = Category.objects.get(id= category_id)
@@ -79,7 +81,8 @@ def create_subcategory(request):
             subcategory_obj = Subcategory.objects.create(
                 store = store_obj,
                 category = category_obj,
-                subcategory_name = subcategory_name
+                subcategory_name = subcategory_name,
+                subcategory_image = subcategory_image
             )
             return JsonResponse({'validation':'success','status':True})
     except Exception as e:
@@ -320,7 +323,7 @@ def get_products_by_store_id(request):
 
         
 def update_store_by_field(request):
-    params = json.loads(request.body)
+    params = request.POST
 
     store_id = params.get('store_id')
     store_name = params.get('store_name')
@@ -330,31 +333,34 @@ def update_store_by_field(request):
     store_longitude = params.get('store_longitude')
     store_city = params.get('store_city')
     store_state = params.get('store_state')
+    store_image = request.FILES.get('store_image')
     
     try:
-        with transaction.atomic():
-            store_obj = Store.objects.get(id = store_id)
-            store_obj.id = store_id
-            store_obj.store_name = store_name
-            store_obj.store_location = store_location
-            store_obj.store_address = store_address
-            store_obj.store_latitude = store_latitude
-            store_obj.store_longitude = store_longitude
-            store_obj.store_city = store_city
-            store_obj.store_state = store_state
-            store_obj.save()
-            return JsonResponse({'validation':'success','status':True})
+    
+        store_obj = Store.objects.get(id = store_id)
+        store_obj.id = store_id
+        store_obj.store_name = store_name
+        store_obj.store_location = store_location
+        store_obj.store_address = store_address
+        store_obj.store_latitude = store_latitude
+        store_obj.store_longitude = store_longitude
+        store_obj.store_city = store_city
+        store_obj.store_state = store_state
+        store_obj.store_image = store_image
+        store_obj.save()
+        return JsonResponse({'validation':'success','status':True})
     except Exception as e:
         return JsonResponse({'validation':str(e),'status':False})
 
       #   ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 def update_category_by_field(request):
-    params = json.loads(request.body)
+    params = request.POST
     
     category_id = params.get('category_id')
     store_id = params.get('store_id')
     category_name = params.get('category_name')
+    category_image = request.FILES.get('category_image')
 
     store_obj = Store.objects.get(id= store_id)
 
@@ -367,6 +373,7 @@ def update_category_by_field(request):
             print(category_obj.store)
             category_obj.id = category_id
             category_obj.category_name = category_name
+            category_obj.category_image = category_image
             category_obj.save()
             return JsonResponse({'validation':'success','status':True})
     except Exception as e:
@@ -376,13 +383,14 @@ def update_category_by_field(request):
     # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 def update_subcategory_by_field(request):
-    params = json.loads(request.body)
+    params = request.POST
 
     
     # store_id = params.get('store_id')
     category_id = params.get('category_id')
     subcategory_id = params.get('subcategory_id')
     subcategory_name = params.get('subcategory_name')
+    subcategory_image = request.FILES.get('subcategory_image')
 
     # store_obj = Store.objects.get(id= store_id)
     category_obj = Category.objects.get(id= category_id)
@@ -394,6 +402,7 @@ def update_subcategory_by_field(request):
                 # store = store_obj,
             subcategory_obj.category = category_obj
             subcategory_obj.subcategory_name = subcategory_name
+            subcategory_obj.subcategory_image = subcategory_image
             subcategory_obj.save()
             return JsonResponse({'validation':'success','status':True})
     except Exception as e:
@@ -402,7 +411,7 @@ def update_subcategory_by_field(request):
 
 def update_product_by_field(request):
 
-    params = json.loads(request.body)
+    params = request.POST
 
     # store_id = params.get('store_id')
     product_id = params.get('product_id')
@@ -412,6 +421,7 @@ def update_product_by_field(request):
     product_price  = params.get('product_price')
     product_discount_price = params.get('product_discount_price')
     product_description= params.get('product_description')
+    product_image = request.FILES.get('product_image')
 
     # store_obj = Store.objects.get(id= store_id)
     subcategory_obj = Subcategory.objects.get(id= subcategory_id)
@@ -429,6 +439,7 @@ def update_product_by_field(request):
             product_obj.product_price = product_price
             product_obj.product_discount_price = product_discount_price
             product_obj.product_description = product_description
+            product_obj.product_image = product_image
             product_obj.save()
             
             return JsonResponse({'validation':'success','status':True})
