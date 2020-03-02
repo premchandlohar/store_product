@@ -7,6 +7,7 @@ urlpatterns = [
      path('create_user/', views.create_user),
      path('get_user_by_id/', views.get_user_by_id),
      path('get_all_users/', views.get_all_users),
+     path('update_user_by_field/', views.update_user_by_field),
 
 
 

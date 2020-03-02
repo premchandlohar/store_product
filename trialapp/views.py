@@ -349,7 +349,6 @@ def update_category_by_field(request):
             category_obj = Category.objects.get(id = category_id)
 
             category_obj.store = store_obj
-            print(category_obj.store)
             category_obj.id = category_id
             category_obj.category_name = category_name
             category_obj.category_image = category_image

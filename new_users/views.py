@@ -63,5 +63,32 @@ def get_all_users(request):
     except Exception as e:
         return JsonResponse({'validation':str(e),'status':False})
     
+def update_user_by_field(request):
+    params = json.loads(request.body)
+
+    user_id = params.get('user_id')
+    username = params.get('username')
+    password = params.get('password')
+    first_name = params.get('first_name')
+    last_name = params.get('last_name')
+    age = params.get('age')
+    email = params.get('email')
+
+    try:
+
+        userprofile_obj = UserProfile.objects.get(id = user_id)
+        print(userprofile_obj)
+        userprofile_obj.user.username = username
+        userprofile_obj.first_name = first_name
+        userprofile_obj.last_name = last_name
+        userprofile_obj.age = age
+        userprofile_obj.email = email
+        userprofile_obj.save()
+
+        return JsonResponse({'validation':'success','status':True})
+    except Exception as e:
+        return JsonResponse({'validation':str(e),'status':False})
+            
+        
 
 
