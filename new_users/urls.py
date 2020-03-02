@@ -4,5 +4,11 @@ from new_users import views
 # from django.conf.urls.static import static
 
 urlpatterns = [
-     path('create_user/', views.create_user)
+     path('create_user/', views.create_user),
+     path('get_user_by_id/', views.get_user_by_id),
+     path('get_all_users/', views.get_all_users),
+
+
+
+
 ]

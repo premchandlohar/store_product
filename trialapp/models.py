@@ -60,6 +60,14 @@ class Category(models.Model):
             'category_image':str(self.category_image)
         }
 
+    def get_category(self):
+        return {
+                'store_id':self.store.id,
+                'store_name':self.store.store_name,
+                'category_id':self.id,
+                'category_name':self.category_name
+            }
+
 
 
 class Subcategory(models.Model):
@@ -94,6 +102,15 @@ class Subcategory(models.Model):
                 'subcategory_name':self.subcategory_name,
                 'subcategory_image': str(self.subcategory_image)
             }
+    
+    def get_subcategory(self):
+        return {
+                'category_id':self.category.id,
+                'category_name':self.category.category_name,
+                'subcategory_id':self.id,
+                'subcategory_name':self.subcategory_name
+            }
+        
 
 
 class Product(models.Model):

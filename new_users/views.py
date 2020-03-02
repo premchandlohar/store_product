@@ -34,3 +34,34 @@ def create_user(request):
         return JsonResponse({'validation':'success','status':True})
     except Exception as e:
         return JsonResponse({'validation':str(e),'status':False})
+        # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+def get_user_by_id(request):
+    response =[]
+    params = json.loads(request.body)
+
+    user_id = params.get('user_id')
+
+    try:
+
+        get_user_obj = UserProfile.objects.get(id= user_id)
+        # print(get_user_obj)
+        response.append(get_user_obj.get_json())
+        print(response)
+        return JsonResponse({'validation':'success','response':response,'status':True})
+    except Exception as e:
+        return JsonResponse({'validation':str(e),'status':False})
+    
+def get_all_users(request):
+    response =[]
+
+    try:
+        users_obj = UserProfile.objects.all()
+        for users in users_obj:
+            response.append(users.all_user())
+        return JsonResponse({'validation':'success','response':response,'status':True})
+    except Exception as e:
+        return JsonResponse({'validation':str(e),'status':False})
+    
+
+

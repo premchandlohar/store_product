@@ -254,12 +254,7 @@ def get_category_by_store_id(request):
         store_obj = Store.objects.get(id= store_id)
         category_qs = Category.objects.filter(store = store_obj)
         for category in category_qs:
-            response.append({
-                'store_id':category.store.id,
-                'store_name':category.store.store_name,
-                'category_id':category.id,
-                'category_name':category.category_name
-            })
+            response.append(category.get_category())
         return JsonResponse({'validation':'success','response':response,'status':True})
     except Exception as e:
         return JsonResponse({'validation':str(e),'status':False})
@@ -276,12 +271,7 @@ def get_subcategory_by_category_id(request):
         category_obj = Category.objects.get(id= category_id)
         subcategory_qs = Subcategory.objects.filter(category = category_obj)
         for subcategory in subcategory_qs:
-            response.append({
-                'category_id':subcategory.category.id,
-                'category_name':subcategory.category.category_name,
-                'subcategory_id':subcategory.id,
-                'subcategory_name':subcategory.subcategory_name
-            })
+            response.append(subcategory.get_subcategory())
         return JsonResponse({'validation':'success','response':response,'status':True})
     except Exception as e:
         return JsonResponse({'validation':str(e),'status':False})
@@ -304,18 +294,7 @@ def get_products_by_store_id(request):
 
         # product_qs = Product.objects.filter(subcategory = subcategory_id)
         for product in product_qs:
-            response.append({
-                'store_id': product.store.id,
-                'store_name': product.store.store_name,
-                'subcategory_id': product.subcategory.id,
-                'subcategory_name':product.subcategory.subcategory_name,
-                'product_id': product.id,
-                'product_name' : product.product_name,     
-                'product_quantity' : product.product_quantity,
-                'product_price' : product.product_price,       
-                'product_discount_price' : product.product_discount_price,
-                'product_description' : product.product_description
-            })
+            response.append(product.get_json())
         return JsonResponse({'validation':'success','response':response,'status':True})
     except Exception as e:
         return JsonResponse({'validation':str(e),'status':False})

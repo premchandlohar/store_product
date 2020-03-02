@@ -12,3 +12,22 @@ class UserProfile(models.Model):
     last_name = models.CharField(max_length=30)
     age = models.PositiveSmallIntegerField()
     email = models.EmailField(max_length=255,unique=True)
+
+    def __str__(self):
+        return self.user.username
+
+    def get_json(self):
+        return {
+            "first_name" : self.first_name,
+            "last_name" : self.last_name,
+            "email" : self.email
+        }
+
+    def all_user(self):
+        return {
+            "username": self.user.username,
+            "email" : self.email
+
+        }
+    # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+class 
