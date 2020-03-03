@@ -12,6 +12,8 @@ urlpatterns = [
      path('update_address_by_address_id/', views.update_address_by_address_id),
      path('get_address_by_id/', views.get_address_by_id),
      path('get_all_address/', views.get_all_address),
+     path('delete_user_by_id/', views.delete_user_by_id),
+     path('delete_address_by_id/', views.delete_address_by_id),
 
 
 ]

@@ -1,6 +1,10 @@
 # from django.shortcuts import render
 # from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model
+# from django.contrib.auth import set_password
+from django.db import transaction
+
+
 
 from django.http import JsonResponse
 import json
@@ -18,20 +22,21 @@ def create_user(request):
     email = params.get('email')
 
     try:
-        user_obj = get_user_model().objects.create_user(
-            username = username,
-            password = password
-        )
+        with transaction.atomic():
+            user_obj = get_user_model().objects.create(username = username)
+            print(user_obj)
+            user_obj.set_password(password)
+            user_obj.save()
 
-
-        userprofile_obj = UserProfile.objects.create(
-            user = user_obj,
-            first_name = first_name,
-            last_name = last_name,
-            age = age,
-            email = email
-        )
-        return JsonResponse({'validation':'success','status':True})
+            userprofile_obj = UserProfile.objects.create(
+                user = user_obj,
+                first_name = first_name,
+                last_name = last_name,
+                age = age,
+                email = email
+            )
+            # print(userprofile_obj)
+            return JsonResponse({'validation':'success','status':True})
     except Exception as e:
         return JsonResponse({'validation':str(e),'status':False})
         # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -189,8 +194,32 @@ def get_all_address(request):
         # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
  
 
+def delete_user_by_id(request):
+    params = json.loads(request.body) 
+
+    user_id = params.get('user_id')
+    try:
+        with transaction.atomic():
+
+            user_obj = UserProfile.objects.get(id =user_id).delete()
+            return JsonResponse({'validation':'success','status':True})
+    except Exception as e:
+        return JsonResponse({'validation':str(e),'status':False})
+        # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
     
-    
+def delete_address_by_id(request):
+    params = json.loads(request.body) 
+
+    address_id = params.get('address_id')
+    try:
+        with transaction.atomic():
+
+            address_obj = Address.objects.get(id = address_id).delete()
+            return JsonResponse({'validation':'success','status':True})
+    except Exception as e:
+        return JsonResponse({'validation':str(e),'status':False})
+        # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
            
            
