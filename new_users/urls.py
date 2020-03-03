@@ -8,6 +8,8 @@ urlpatterns = [
      path('get_user_by_id/', views.get_user_by_id),
      path('get_all_users/', views.get_all_users),
      path('update_user_by_field/', views.update_user_by_field),
+     path('create_address/', views.create_address),
+     path('update_address_by_address_id/', views.update_address_by_address_id),
 
 
 

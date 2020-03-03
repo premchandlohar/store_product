@@ -4,7 +4,7 @@ from django.contrib.auth import get_user_model
 
 from django.http import JsonResponse
 import json
-from .models import UserProfile
+from .models import *
 
 # Create your views here.
 def create_user(request):
@@ -57,8 +57,8 @@ def get_all_users(request):
 
     try:
         users_obj = UserProfile.objects.all()
-        for users in users_obj:
-            response.append(users.all_user())
+        for user in users_obj:
+            response.append(user.all_user())
         return JsonResponse({'validation':'success','response':response,'status':True})
     except Exception as e:
         return JsonResponse({'validation':str(e),'status':False})
@@ -88,7 +88,83 @@ def update_user_by_field(request):
         return JsonResponse({'validation':'success','status':True})
     except Exception as e:
         return JsonResponse({'validation':str(e),'status':False})
-            
-        
+
+        # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+def create_address(request):
+    params = json.loads(request.body)
+
+    user_id = params.get('user_id')
+    # username = params.get('username')
+    # first_name = params.get('first_name')
+    # last_nmae = params.get('last_nmae')
+    building_name = params.get('building_name')
+    street_name = params.get('street_name')
+    locality = params.get('locality')
+    city = params.get('city')
+    district = params.get('district')
+    state = params.get('state')
+    pincode = params.get('pincode')
+
+    try:
+
+        userprofile_obj = UserProfile.objects.get(id = user_id)
+        address_obj = Address.objects.create(
+
+            userprofile = userprofile_obj,
+            building_name = building_name,
+            street_name = street_name,
+            locality = locality,
+            city = city,
+            district= district,
+            state = state,
+            pincode = pincode
+        )
+
+        return JsonResponse({'validation':'success','status':True})
+    except Exception as e:
+        return JsonResponse({'validation':str(e),'status':False})
+        # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    
+def update_address_by_address_id(request):
+    params = json.loads(request.body)
+
+    user_id = params.get('user_id')
+    address_id = params.get('address_id')
+    # username = params.get('username')
+    # first_name = params.get('first_name')
+    # last_nmae = params.get('last_nmae')
+    building_name = params.get('building_name')
+    street_name = params.get('street_name')
+    locality = params.get('locality')
+    city = params.get('city')
+    district = params.get('district')
+    state = params.get('state')
+    pincode = params.get('pincode')
+
+    try:
+
+        userprofile_obj = UserProfile.objects.get(id = user_id)
+        address_obj = Address.objects.get(id=address_id)
+
+        address_obj.userprofile.username = userprofile_obj,
+        address_obj.building_name = building_name,
+        address_obj.street_name = street_name,
+        address_obj.locality = locality,
+        address_obj.city = city,
+        address_obj.district= district,
+        address_obj.state = state,
+        address_obj.pincode = pincode
+        address_obj.save()
+        return JsonResponse({'validation':'success','status':True})
+    except Exception as e:
+        return JsonResponse({'validation':str(e),'status':False})
+    
+
+           
+           
+
+
+
 
 
