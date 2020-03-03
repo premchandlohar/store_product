@@ -159,6 +159,37 @@ def update_address_by_address_id(request):
         return JsonResponse({'validation':'success','status':True})
     except Exception as e:
         return JsonResponse({'validation':str(e),'status':False})
+        # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+def get_address_by_id(request):
+    params = json.loads(request.body)
+    response = []
+
+    address_id = params.get('address_id')
+    try:
+
+        address_obj = Address.objects.get(id = address_id)
+        response.append(address_obj.get_json())
+        return JsonResponse({'validation':'success','response':response,'status':True})
+    except Exception as e:
+        return JsonResponse({'validation':str(e),'status':False})
+        # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+def get_all_address(request):
+    response = []
+
+    try:
+        
+        address_obj = Address.objects.all()
+        for addresses in address_obj:
+            response.append(addresses.get_json())
+        return JsonResponse({'validation':'success','response':response,'status':True})
+    except Exception as e:
+        return JsonResponse({'validation':str(e),'status':False})
+        # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 
+
+    
     
 
            

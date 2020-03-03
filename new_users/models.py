@@ -51,3 +51,20 @@ class Address(models.Model):
     class Meta:
         # verbose_name = "Category"
         verbose_name_plural = "Addresses"
+
+    def get_json(self):
+        return {
+            "first_name" : self.userprofile.first_name,
+            "last_name" : self.userprofile.last_name,
+            "building_name" : self.building_name,
+            "street_name" : self.street_name,
+            "locality" : self.locality,
+            "city" : self.city,
+            "district" : self.district,
+            "state" : self.state,
+            "pincode" : self.pincode
+        }
+
+   
+
+            
