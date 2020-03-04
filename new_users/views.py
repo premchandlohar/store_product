@@ -107,7 +107,6 @@ def create_address(request):
         with transaction.atomic():
             userprofile_obj = UserProfile.objects.get(id = user_id)
             address_obj = Address.objects.create(
-
                 userprofile = userprofile_obj,
                 building_name = building_name,
                 street_name = street_name,
@@ -141,15 +140,13 @@ def update_address_by_address_id(request):
             userprofile_obj = UserProfile.objects.get(id = user_id)
             address_obj = Address.objects.get(id=address_id)
 
-            address_obj.userprofile.username = userprofile_obj,
-            address_obj.building_name = building_name,
-            address_obj.street_name = street_name,
-            address_obj.locality = locality,
-            address_obj.city = city,
-            print(city)
-            print(address_obj.city)
-            address_obj.district= district,
-            address_obj.state = state,
+            address_obj.userprofile = userprofile_obj
+            address_obj.building_name = building_name
+            address_obj.street_name = street_name
+            address_obj.locality = locality
+            address_obj.city = city
+            address_obj.district= district
+            address_obj.state = state
             address_obj.pincode = pincode
             address_obj.save()
             return JsonResponse({'validation':'success','status':True})

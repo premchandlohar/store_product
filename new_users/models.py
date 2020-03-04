@@ -46,6 +46,7 @@ class Address(models.Model):
         return self.userprofile.first_name +" "+ self.userprofile.last_name
 
     class Meta:
+        verbose_name = "Address"
         verbose_name_plural = "Addresses"
 
     def get_json(self):
