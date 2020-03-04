@@ -2,7 +2,6 @@ from django.http import JsonResponse
 from trialapp.models import *
 import json
 from django.db import transaction
-# from PIL import Image
 
 
 # Create your views here.
@@ -131,7 +130,6 @@ def get_store_by_id(request):
     store_id = params.get('store_id')
 
     try:
-        # with transaction.atomic():
 
         store_obj = Store.objects.get(id=store_id)
         response.append(store_obj.get_json())
@@ -315,19 +313,19 @@ def update_store_by_field(request):
     store_image = request.FILES.get('store_image')
     
     try:
-    
-        store_obj = Store.objects.get(id = store_id)
-        store_obj.id = store_id
-        store_obj.store_name = store_name
-        store_obj.store_location = store_location
-        store_obj.store_address = store_address
-        store_obj.store_latitude = store_latitude
-        store_obj.store_longitude = store_longitude
-        store_obj.store_city = store_city
-        store_obj.store_state = store_state
-        store_obj.store_image = store_image
-        store_obj.save()
-        return JsonResponse({'validation':'success','status':True})
+        with transaction.atomic():
+            store_obj = Store.objects.get(id = store_id)
+            store_obj.id = store_id
+            store_obj.store_name = store_name
+            store_obj.store_location = store_location
+            store_obj.store_address = store_address
+            store_obj.store_latitude = store_latitude
+            store_obj.store_longitude = store_longitude
+            store_obj.store_city = store_city
+            store_obj.store_state = store_state
+            store_obj.store_image = store_image
+            store_obj.save()
+            return JsonResponse({'validation':'success','status':True})
     except Exception as e:
         return JsonResponse({'validation':str(e),'status':False})
 
@@ -465,8 +463,16 @@ def delete_subcategory_by_id(request):
     
     # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
+def delete_product_by_id(request):
+    params = json.loads(request.body)
 
-        
+    product_id = params.get('product_id')
+    try:
+        product_obj = Product.objects.get(id = product_id).delete()
+        return JsonResponse({'validation':'success','status':True})
+    except Exception as e:
+        return JsonResponse({'validation':str(e),'status':False})
+    
 
 
 

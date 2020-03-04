@@ -1,10 +1,5 @@
 from django.db import models
-# from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model
-# from django.contrib.auth import set_password
-
-
-
 
 
 # Create your models here.
@@ -51,7 +46,6 @@ class Address(models.Model):
         return self.userprofile.first_name +" "+ self.userprofile.last_name
 
     class Meta:
-        # verbose_name = "Category"
         verbose_name_plural = "Addresses"
 
     def get_json(self):
