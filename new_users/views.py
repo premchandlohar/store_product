@@ -15,6 +15,7 @@ def create_user(request):
     last_name = params.get('last_name')
     age = params.get('age')
     email = params.get('email')
+    # created_on = params.get('created_on')
 
     try:
         with transaction.atomic():
@@ -28,8 +29,10 @@ def create_user(request):
                 first_name = first_name,
                 last_name = last_name,
                 age = age,
-                email = email
+                email = email,
+                # created_on = created_on
             )
+            # userprofile_obj.save()
             # print(userprofile_obj)
             return JsonResponse({'validation':'success','status':True})
     except Exception as e:
@@ -180,8 +183,23 @@ def get_all_address(request):
     except Exception as e:
         return JsonResponse({'validation':str(e),'status':False})
         # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 
 
+def get_addresses_of_user(request):
+    params = json.loads(request.body)
+    response = []
+
+    user_id = params.get('user_id')
+    
+    try:
+        # user_obj = UserProfile.objects.get(id= user_id)
+        address_qs = Address.objects.filter(userprofile=user_id )
+        for address in address_qs:
+            response.append(address.get_json())
+        return JsonResponse({'validation':'success','response':response,'status':True})
+    except Exception as e:
+        return JsonResponse({'validation':str(e),'status':False})
+        
+      # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 def delete_user_by_id(request):
     params = json.loads(request.body) 
 

@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+import datetime
 
 
 # Create your models here.
@@ -9,6 +10,7 @@ class UserProfile(models.Model):
     last_name = models.CharField(max_length=30)
     age = models.PositiveSmallIntegerField()
     email = models.EmailField(max_length=255,unique=True)
+    # created_on = models.DateTimeField(auto_now_add=True,null=True,blank=True)
 
     def __str__(self):
         return self.first_name + " " + self.last_name
@@ -19,7 +21,8 @@ class UserProfile(models.Model):
             "first_name" : self.first_name,
             "last_name" : self.last_name,
             "age" : self.age,
-            "email" : self.email
+            "email" : self.email,
+            # "created_on" :self.created_on
         }
 
     def all_user(self):
@@ -29,7 +32,9 @@ class UserProfile(models.Model):
             "first_name" : self.first_name,
             "last_name" : self.last_name,
             "age" : self.age,
-            "email" : self.email
+            "email" : self.email,
+            # "created_on" :self.created_on
+
         }
     # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 class Address(models.Model):
@@ -51,6 +56,7 @@ class Address(models.Model):
 
     def get_json(self):
         return {
+            "user_id" : self.userprofile.id,
             "first_name" : self.userprofile.first_name,
             "last_name" : self.userprofile.last_name,
             "building_name" : self.building_name,
