@@ -311,6 +311,7 @@ def update_store_by_field(request):
     store_city = params.get('store_city')
     store_state = params.get('store_state')
     store_image = request.FILES.get('store_image')
+    # created_on = params.get('created_on')
     
     try:
         with transaction.atomic():
@@ -324,6 +325,7 @@ def update_store_by_field(request):
             store_obj.store_city = store_city
             store_obj.store_state = store_state
             store_obj.store_image = store_image
+            # store_obj.created_on = created_on
             store_obj.save()
             return JsonResponse({'validation':'success','status':True})
     except Exception as e:

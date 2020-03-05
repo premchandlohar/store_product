@@ -15,7 +15,6 @@ def create_user(request):
     last_name = params.get('last_name')
     age = params.get('age')
     email = params.get('email')
-    # created_on = params.get('created_on')
 
     try:
         with transaction.atomic():
@@ -30,7 +29,6 @@ def create_user(request):
                 last_name = last_name,
                 age = age,
                 email = email,
-                # created_on = created_on
             )
             # userprofile_obj.save()
             # print(userprofile_obj)
@@ -200,6 +198,7 @@ def get_addresses_of_user(request):
         return JsonResponse({'validation':str(e),'status':False})
         
       # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+      
 def delete_user_by_id(request):
     params = json.loads(request.body) 
 

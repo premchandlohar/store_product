@@ -1,5 +1,5 @@
 from django.db import models
-
+from datetime import datetime
 
 
 # Create your models here.
@@ -12,6 +12,8 @@ class Store(models.Model):
     store_city = models.CharField(max_length=30)
     store_state = models.CharField(max_length=30)
     store_image = models.ImageField(upload_to ='uploads/%Y/%m/%d/',null = True,blank= True)
+    created_on = models.DateTimeField(auto_now_add=True,null=True,blank=True)
+
 
     def __str__(self):
         return self.store_name
@@ -27,13 +29,16 @@ class Store(models.Model):
             'store_city':self.store_city,
             'store_state':self.store_state,
             'store_image':str(self.store_image),
+            'created_on':str(self.created_on),
         }
+    # ******************************************************************************************
 
-         
 class Category(models.Model):
     store = models.ForeignKey(Store, on_delete=models.CASCADE)
     category_name = models.CharField(max_length=30)
     category_image = models.ImageField(upload_to = 'uploads',null = True)
+    created_on = models.DateTimeField(auto_now_add=True,null=True,blank=True)
+
 
     def __str__(self):
         return self.category_name
@@ -48,16 +53,18 @@ class Category(models.Model):
             'store_name':self.store.store_name,
             'category_id':self.id,
             'category_name':self.category_name,
-            'category_image':str(self.category_image)
-
+            'category_image':str(self.category_image),
+            'created_on':str(self.created_on),
         }
+
 
     def get_all_category(self):
         return {
             'store_name':self.store.store_name,
             'category_id':self.id,
             'category_name':self.category_name,
-            'category_image':str(self.category_image)
+            'category_image':str(self.category_image),
+            'created_on':str(self.created_on),
         }
 
     def get_category(self):
@@ -65,16 +72,18 @@ class Category(models.Model):
                 'store_id':self.store.id,
                 'store_name':self.store.store_name,
                 'category_id':self.id,
-                'category_name':self.category_name
+                'category_name':self.category_name,
+                'created_on':str(self.created_on),
             }
 
-
-
+    # *******************************************************************************************************
 class Subcategory(models.Model):
-    store                  = models.ForeignKey(Store, on_delete=models.CASCADE)
-    category               = models.ForeignKey(Category, on_delete=models.CASCADE)
-    subcategory_name       = models.CharField(max_length=30)
-    subcategory_image      = models.ImageField(upload_to = 'uploads',null = True) 
+    store  = models.ForeignKey(Store, on_delete=models.CASCADE)
+    category  = models.ForeignKey(Category, on_delete=models.CASCADE)
+    subcategory_name  = models.CharField(max_length=30)
+    subcategory_image  = models.ImageField(upload_to = 'uploads',null = True) 
+    created_on = models.DateTimeField(auto_now_add=True,null=True,blank=True)
+
 
     def __str__(self):
         return self.subcategory_name
@@ -91,8 +100,10 @@ class Subcategory(models.Model):
             'category_name': self.category.category_name,
             'subcategory_id': self.id,
             'subcategory_name': self.subcategory_name,
-            'subcategory_image': str(self.subcategory_image)
+            'subcategory_image': str(self.subcategory_image),
+            'created_on':str(self.created_on),
         }
+
 
     def get_all_subcategory(self):
         return {
@@ -100,28 +111,32 @@ class Subcategory(models.Model):
                 'category_name':self.category.category_name,
                 'subcategory_id':self.id,
                 'subcategory_name':self.subcategory_name,
-                'subcategory_image': str(self.subcategory_image)
+                'subcategory_image': str(self.subcategory_image),
+                'created_on':str(self.created_on),
             }
+
     
     def get_subcategory(self):
         return {
                 'category_id':self.category.id,
                 'category_name':self.category.category_name,
                 'subcategory_id':self.id,
-                'subcategory_name':self.subcategory_name
+                'subcategory_name':self.subcategory_name,
+                'created_on':str(self.created_on),
             }
-        
 
-
+        # *********************************************************************************************
 class Product(models.Model):
-    store                  = models.ForeignKey(Store, on_delete=models.CASCADE)
-    subcategory            = models.ForeignKey(Subcategory, on_delete=models.CASCADE)
-    product_name           = models.CharField(max_length=30)
-    product_quantity       = models.DecimalField( max_digits=6, decimal_places=2)
-    product_price          = models.FloatField()
+    store   = models.ForeignKey(Store, on_delete=models.CASCADE)
+    subcategory  = models.ForeignKey(Subcategory, on_delete=models.CASCADE)
+    product_name  = models.CharField(max_length=30)
+    product_quantity  = models.DecimalField( max_digits=6, decimal_places=2)
+    product_price  = models.FloatField()
     product_discount_price = models.FloatField()
-    product_description    = models.TextField(max_length=801)
-    product_image          = models.ImageField(upload_to = 'uploads',null = True,blank= True)
+    product_description  = models.TextField(max_length=801)
+    product_image  = models.ImageField(upload_to = 'uploads',null = True,blank= True)
+    created_on = models.DateTimeField(auto_now_add=True,null=True,blank=True)
+
     
     def __str__(self):
         return self.product_name
@@ -140,7 +155,8 @@ class Product(models.Model):
             'product_price' : self.product_price,       
             'product_discount_price' : self.product_discount_price,
             'product_description' : self.product_description,
-            'product_image':str(self.product_image)
+            'product_image':str(self.product_image),
+            'created_on':str(self.created_on),
         }
 
     def get_all_product(self):
@@ -149,8 +165,10 @@ class Product(models.Model):
             'product_id': self.id,
             'product_name' : self.product_name,     
             'product_price' : self.product_price,
-            'product_image' : str(self.product_image)
+            'product_image' : str(self.product_image),
+            'created_on':str(self.created_on),
         }
+        # *****************************************************************************************
 
 
 
