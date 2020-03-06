@@ -188,11 +188,11 @@ def get_addresses_of_user(request):
     response = []
 
     user_id = params.get('user_id')
-    
+    # use related_name =address
     try:
-        # user_obj = UserProfile.objects.get(id= user_id)
-        address_qs = Address.objects.filter(userprofile=user_id )
-        for address in address_qs:
+        userprofile = UserProfile.objects.get(id= user_id)
+        # address_qs = Address.objects.filter(userprofile=user_id )
+        for address in userprofile.addresses.all():
             response.append(address.get_json())
         return JsonResponse({'validation':'success','response':response,'status':True})
     except Exception as e:

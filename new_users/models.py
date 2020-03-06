@@ -39,7 +39,7 @@ class UserProfile(models.Model):
 
     # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 class Address(models.Model):
-    userprofile = models.ForeignKey(UserProfile,on_delete=models.CASCADE)
+    userprofile = models.ForeignKey(UserProfile,on_delete=models.CASCADE,related_name='addresses')
     building_name =  models.CharField(max_length=30)
     street_name =  models.CharField(max_length=30)
     locality =  models.CharField(max_length=30)
