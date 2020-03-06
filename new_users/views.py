@@ -63,6 +63,7 @@ def get_all_users(request):
         return JsonResponse({'validation':'success','response':response,'status':True})
     except Exception as e:
         return JsonResponse({'validation':str(e),'status':False})
+    #       +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     
 def update_user_by_field(request):
     params = json.loads(request.body)
