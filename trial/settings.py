@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'trialapp',
     'new_users',
+    'thirdapp',
 ]
 
 MIDDLEWARE = [
