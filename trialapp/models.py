@@ -1,5 +1,6 @@
 from django.db import models
 from datetime import datetime
+from new_users.models import UserProfile
 
 
 # Create your models here.
@@ -13,6 +14,8 @@ class Store(models.Model):
     store_state = models.CharField(max_length=30)
     store_image = models.ImageField(upload_to ='uploads/%Y/%m/%d/',null = True,blank= True)
     created_on = models.DateTimeField(auto_now_add=True,null=True,blank=True)
+    follower = models.ManyToManyField(UserProfile, through = 'Followership',related_name='followers',
+    blank =True,null=True)
 
 
     def __str__(self):
@@ -170,6 +173,15 @@ class Product(models.Model):
         }
         # *****************************************************************************************
 
+class Followership(models.Model):  
+    store = models.ForeignKey(Store, on_delete=models.CASCADE)
+    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+
+    def get_json(self):
+        return {
+            "store" : self.store.name,
+            "userprofile": self.userprofile.first_name,
+        }
 
 
 

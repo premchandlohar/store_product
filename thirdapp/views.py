@@ -80,7 +80,7 @@ def create_membership(request):
             person_obj = Person.objects.get(id=person_id)
             group_obj = Group.objects.get(id=group_id)
 
-            membersh_obj = Membership.objects.create(
+            membership_obj = Membership.objects.create(
                 person = person_obj, 
                 group = group_obj,
                 invite_reason = invite_reason  

@@ -11,7 +11,6 @@ class UserProfile(models.Model):
     age = models.PositiveSmallIntegerField()
     email = models.EmailField(max_length=255,unique=True)
     created_on = models.DateTimeField(auto_now_add=True,null=True,blank=True)
-    
 
     def __str__(self):
         return self.first_name + " " + self.last_name
@@ -69,6 +68,11 @@ class Address(models.Model):
             "pincode" : self.pincode
         }
 
-   
+        # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+
+
+
 
             

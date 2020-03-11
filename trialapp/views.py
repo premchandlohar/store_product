@@ -475,6 +475,29 @@ def delete_product_by_id(request):
     except Exception as e:
         return JsonResponse({'validation':str(e),'status':False})
     
+    # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+def create_followership(request):
+    params = json.loads(request.body)
+
+    store_id = params.get('store_id')
+    user_id = params.get('user_id')
+
+    try:
+        with transaction.atomic():
+            store_obj = Store.objects.get(id=store_id)
+            user_obj = UserProfile.objects.get(id=user_id)
+
+            followership_obj = Followership.objects.create(
+                store = store_obj, 
+                user = user_obj
+                )
+            print(followership_obj)
+            return JsonResponse({'validation':'success','status':True})
+    except Exception as e:
+        return JsonResponse({'validation':str(e), 'status':False})
+
+        # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 
 

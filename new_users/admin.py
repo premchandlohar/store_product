@@ -5,3 +5,4 @@ from new_users.models import *
 admin.site.register(UserProfile)
 admin.site.register(Address)
 
+

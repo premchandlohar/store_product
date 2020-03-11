@@ -13,6 +13,7 @@ urlpatterns = [
      path('delete_user_by_id/', views.delete_user_by_id),
      path('delete_address_by_id/', views.delete_address_by_id),
      path('get_addresses_of_user/', views.get_addresses_of_user),
+     # path('create_relationship/', views.create_relationship),
 
 
 ]
