@@ -15,7 +15,9 @@ class Store(models.Model):
     store_image = models.ImageField(upload_to ='uploads/%Y/%m/%d/',null = True,blank= True)
     created_on = models.DateTimeField(auto_now_add=True,null=True,blank=True)
     follower = models.ManyToManyField(UserProfile, through = 'Followership',related_name='followers',
-    blank =True,null=True)
+    blank =True)
+    # following= models.ManyToManyField('Store', through = 'Followership',related_name='following',
+    # blank =True)
 
 
     def __str__(self):
@@ -177,11 +179,15 @@ class Followership(models.Model):
     store = models.ForeignKey(Store, on_delete=models.CASCADE)
     user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
 
-    def get_json(self):
-        return {
-            "store" : self.store.name,
-            "userprofile": self.userprofile.first_name,
-        }
+    # def get_json(self):
+    #     return {
+    #         "store" : self.store.name,
+    #         "user": self.user.first_name,
+    #     }
+
+    def __str__(self):
+        return self.user.first_name
+
 
 
 

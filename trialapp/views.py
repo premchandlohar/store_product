@@ -477,7 +477,7 @@ def delete_product_by_id(request):
     
     # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-def create_followership(request):
+def add_follower_to_store(request):
     params = json.loads(request.body)
 
     store_id = params.get('store_id')
@@ -499,11 +499,51 @@ def create_followership(request):
 
         # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
+def get_followers_by_store(request):
+    params = json.loads(request.body)
+    response = []
 
+    store_id = params.get('store_id')
+    try:
+        store_obj = Store.objects.get(id=store_id)
+        user = store_obj.follower.all()
+        for follower in user:
+            response.append(follower.first_name)
+        print(response)
+        return JsonResponse({'validation':'success','response':response,'status':True})
+    except Exception as e:
+        return JsonResponse({'validation':str(e), 'status':False})
 
+        # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+def get_stores_by_follower(request):
+    params = json.loads(request.body)
+    response = []
+
+    user_id = params.get('user_id')
+    try:
+        user_obj = UserProfile.objects.get(id=user_id)
+        stores = user_obj.followers.all()
+        for following in stores:
+            response.append(following.store_name)
+        # print(response)
+        return JsonResponse({'validation':'success','response':response,'status':True})
+    except Exception as e:
+        return JsonResponse({'validation':str(e), 'status':False})
+
+    #  +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++   
+
+def get_all_followers(request):
+    response = []
+
+    try:
         
-
-
+        user_obj = Followership.objects.all()
+        for followers in user_obj:
+            response.append(followers.user.first_name)
+        return JsonResponse({'validation':'success','response':response,'status':True})
+    except Exception as e:
+        return JsonResponse({'validation':str(e),'status':False})
 
                 
 

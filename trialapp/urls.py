@@ -27,7 +27,10 @@ urlpatterns = [
     path('delete_category_by_id/',views.delete_category_by_id),
     path('delete_subcategory_by_id/',views.delete_subcategory_by_id),
     path('delete_product_by_id/',views.delete_product_by_id),
-    path('create_followership/',views.create_followership),
+    path('add_follower_to_store/',views.add_follower_to_store),
+    path('get_followers_by_store/',views.get_followers_by_store),
+    path('get_stores_by_follower/',views.get_stores_by_follower),
+    path('get_all_followers/',views.get_all_followers),
 
 
     # path('update_store_by_id/',views.update_store_by_id),

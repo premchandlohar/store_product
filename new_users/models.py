@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 from datetime import datetime
+# from trialapp.models import Store,Followership  
 
 
 # Create your models here.
@@ -11,6 +12,8 @@ class UserProfile(models.Model):
     age = models.PositiveSmallIntegerField()
     email = models.EmailField(max_length=255,unique=True)
     created_on = models.DateTimeField(auto_now_add=True,null=True,blank=True)
+    # following= models.ManyToManyField(Store, through = 'Followership',related_name='following',
+    # blank =True)
 
     def __str__(self):
         return self.first_name + " " + self.last_name
