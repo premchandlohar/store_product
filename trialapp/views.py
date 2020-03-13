@@ -13,28 +13,46 @@ def create_store(request):
     store_location = params.get('store_location')
     store_address = params.get('store_address')
     store_latitude = params.get('store_latitude')
+    print(type(store_latitude))
+    print(store_latitude)
     store_longitude = params.get('store_longitude')
     store_city = params.get('store_city')
     store_state = params.get('store_state')
     store_image = request.FILES.get('store_image')
 
-    try:
-        with transaction.atomic():
+    if type(store_name) != str:
+        return JsonResponse({'validation':'enter valid store name,must be a string'})
+    elif type(store_location) != str:
+        return JsonResponse({'validation':'enter valid location,must be a string'})
+    elif type(store_address) != str:
+        return JsonResponse({'validation':'enter valid address,must be a string'})
+    elif type(store_latitude) !=str:
+        return JsonResponse({'validation':'enter valid latitude,must be a float'})
+    elif type(store_longitude) != str:
+        return JsonResponse({'validation':'enter valid longitude,must be a float'})
+    elif type(store_city) != str:
+        return JsonResponse({'validation':'enter valid store city,must be a string'})
+    elif type(store_state) != str:
+        return JsonResponse({'validation':'enter valid store state,must be a string'})
+    else:
+        try:
+            with transaction.atomic():
 
-            create_obj = Store.objects.create(
-                store_name = store_name,
-                store_location = store_location,
-                store_address = store_address,
-                store_latitude =  store_latitude,
-                store_longitude = store_longitude,
-                store_city = store_city,
-                store_state = store_state,
-                store_image = store_image
-            )
-            return JsonResponse({'validation':'success','status':True})
-    except Exception as e:
-        return JsonResponse({'validation':str(e),'status':False})
-         
+                create_obj = Store.objects.create(
+                    store_name = store_name,
+                    store_location = store_location,
+                    store_address = store_address,
+                    store_latitude =  store_latitude,
+                    store_longitude = store_longitude,
+                    store_city = store_city,
+                    store_state = store_state,
+                    store_image = store_image
+                )
+                
+                return JsonResponse({'validation':'success','status':True})
+        except Exception as e:
+            return JsonResponse({'validation':str(e),'status':False})
+            
         #  ************************************************************************************************
 
 def create_category(request):
@@ -43,9 +61,12 @@ def create_category(request):
     store_id = params.get('store_id')
     category_name = params.get('category_name')
     category_image = request.FILES.get('category_image')
-
+    if type(store_id) != str:
+        return JsonResponse({'validation':'enter valid store id,must be a integer'})
+    elif type(category_name) != str:
+        return JsonResponse({'validation':'enter valid category_name ,must be a string'})
+    
     store_obj = Store.objects.get(id= store_id)
-    print(store_obj)
 
     try:
         with transaction.atomic():
@@ -64,13 +85,19 @@ def create_category(request):
 
 def create_subcategory(request):
     params = request.POST
-
-    
+ 
     store_id = params.get('store_id')
     category_id = params.get('category_id')
     subcategory_name = params.get('subcategory_name')
     subcategory_image = request.FILES.get('subcategory_image')
 
+    if type(store_id) != str:
+        return JsonResponse({'validation':'enter valid store id,must be a integer'})
+    elif type(category_id) != str:
+        return JsonResponse({'validation':'enter valid category_id ,must be a integer'})
+    elif type(subcategory_name) != str:
+        return JsonResponse({'validation':'enter valid subcategory_name ,must be a string'})
+    
     store_obj = Store.objects.get(id= store_id)
     category_obj = Category.objects.get(id= category_id)
 
@@ -96,9 +123,25 @@ def create_product(request):
     product_name = params.get('product_name')
     product_quantity = params.get('product_quantity')
     product_price  = params.get('product_price')
+    print(type(product_price))
     product_discount_price = params.get('product_discount_price')
     product_description = params.get('product_description')
     product_image = request.FILES.get('product_image')
+
+    if type(store_id) != str:
+        return JsonResponse({'validation':'enter valid store id,must be a string'})
+    elif type(subcategory_id) != str:
+        return JsonResponse({'validation':'enter valid subcategory_id ,must be a string'})
+    elif type(product_name) != str:
+        return JsonResponse({'validation':'enter valid product_name ,must be a string'})
+    elif type(product_quantity) != str:
+        return JsonResponse({'validation':'enter valid product_quantity ,must be a integer'})
+    elif type(product_price) !=str:
+        return JsonResponse({'validation':'enter valid product_price ,must be a float'})
+    elif type(product_discount_price) != str:
+        return JsonResponse({'validation':'enter valid product_discount_price ,must be a integer'})
+    elif type(product_description) != str:
+        return JsonResponse({'validation':'enter valid product_description ,must be a string'})
 
     store_obj = Store.objects.get(id= store_id)
     subcategory_obj = Subcategory.objects.get(id= subcategory_id)
