@@ -212,7 +212,6 @@ def delete_user_by_id(request):
         return JsonResponse({'validation':str(e),'status':False})
         # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-    
 def delete_address_by_id(request):
     params = json.loads(request.body) 
 
@@ -224,10 +223,23 @@ def delete_address_by_id(request):
     except Exception as e:
         return JsonResponse({'validation':str(e),'status':False})
 
-        # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
+        # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
           
-           
+def get_users_by_address(request):
+    params = json.loads(request.body)
+    response = []
+
+    address_id = params.get('address_id')
+    try:
+        address_obj = Address.objects.get(id=address_id)
+        multiple_address = address_obj.addresses.all()
+        for address in multiple_address:
+            response.append(address.get_json())
+        return JsonResponse({'validation':'success','response':response,'status':True})
+    except Exception as e:
+        return JsonResponse({'validation':str(e),'status':False})
+        
+        
 
 
 

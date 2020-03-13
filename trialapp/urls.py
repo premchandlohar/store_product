@@ -31,6 +31,8 @@ urlpatterns = [
     path('get_followers_by_store/',views.get_followers_by_store),
     path('get_stores_by_follower/',views.get_stores_by_follower),
     path('get_all_followers/',views.get_all_followers),
+    path('remove_follower_from_store/',views.remove_follower_from_store),
+    path('remove_follower_from_store_for_some_reason/',views.remove_follower_from_store_for_some_reason),
 
 
     # path('update_store_by_id/',views.update_store_by_id),

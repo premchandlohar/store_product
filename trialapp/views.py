@@ -507,9 +507,9 @@ def get_followers_by_store(request):
     try:
         store_obj = Store.objects.get(id=store_id)
         user = store_obj.follower.all()
+        print(user)
         for follower in user:
             response.append(follower.first_name)
-        print(response)
         return JsonResponse({'validation':'success','response':response,'status':True})
     except Exception as e:
         return JsonResponse({'validation':str(e), 'status':False})
@@ -524,6 +524,7 @@ def get_stores_by_follower(request):
     try:
         user_obj = UserProfile.objects.get(id=user_id)
         stores = user_obj.followers.all()
+        print(stores)
         for following in stores:
             response.append(following.store_name)
         # print(response)
@@ -545,11 +546,37 @@ def get_all_followers(request):
     except Exception as e:
         return JsonResponse({'validation':str(e),'status':False})
 
-                
+        # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++        
 
+def remove_follower_from_store(request):
+    params = json.loads(request.body)
 
+    followership_id = params.get('followership_id')
+    
+    try:
+        followership_obj = Followership.objects.get(id=followership_id).delete()
+        return JsonResponse({'validation':'success','status':True})
+    except Exception as e:
+        return JsonResponse({'validation':str(e), 'status':False})
 
+    # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
+def remove_follower_from_store_for_some_reason(request):
+    params = json.loads(request.body)
+
+    followership_id = params.get('followership_id')
+    reason = params.get('reason')
+    
+    try:
+        followership_obj = Followership.objects.get(id=followership_id)
+        followership_obj.user = None
+        followership_obj.reason = reason
+        followership_obj.save()
+        
+        return JsonResponse({'validation':'success','status':True,})
+    except Exception as e:
+        return JsonResponse({'validation':str(e), 'status':False})
+  
 
 
 

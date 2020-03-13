@@ -176,21 +176,22 @@ class Product(models.Model):
         # *****************************************************************************************
 
 class Followership(models.Model):  
+    REASON_CHOICES = (
+        (1,'not intrested'),
+        (2,'high price'),
+        (3,'not liked'),
+        (4,'other')
+    )
     store = models.ForeignKey(Store, on_delete=models.CASCADE)
-    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
-
-    # def get_json(self):
-    #     return {
-    #         "store" : self.store.name,
-    #         "user": self.user.first_name,
-    #     }
+    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE,null=True,blank=True)
+    reason = models.IntegerField( choices=REASON_CHOICES,null=True,blank=True)
+    
 
     def __str__(self):
-        return self.user.first_name
-
-
-
-
-                    
-
+        if self.user == None:
+            return self.store.store_name
+        else:
+            return self.user.first_name + ' ' + self.store.store_name
+        
+    # ***********************************************************************************************
 
