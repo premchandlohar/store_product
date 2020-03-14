@@ -135,7 +135,7 @@ class Product(models.Model):
     store   = models.ForeignKey(Store, on_delete=models.CASCADE)
     subcategory  = models.ForeignKey(Subcategory, on_delete=models.CASCADE)
     product_name  = models.CharField(max_length=30)
-    product_quantity  = models.DecimalField( max_digits=6, decimal_places=2)
+    product_quantity  = models.IntegerField()
     product_price  = models.FloatField()
     product_discount_price = models.FloatField()
     product_description  = models.TextField(max_length=801)

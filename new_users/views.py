@@ -4,6 +4,7 @@ from django.db import transaction
 from django.http import JsonResponse
 import json
 from .models import *
+from validator import *
 
 # Create your views here.
 def create_user(request):
@@ -15,9 +16,22 @@ def create_user(request):
     last_name = params.get('last_name')
     age = params.get('age')
     email = params.get('email')
-
+    
+    if valid_string(username):
+        return JsonResponse({'validation':'enter valid username ,must be a string'})   
+    elif valid_string(password):
+        return JsonResponse({'validation':'enter valid password,must be a string'})  
+    elif valid_string(first_name):
+        return JsonResponse({'validation':'enter valid first_name,must be a string'})   
+    elif valid_string(last_name):
+        return JsonResponse({'validation':'enter valid last_name,must be a string'})    
+    elif valid_integer(age):
+        return JsonResponse({'validation':'enter valid age,must be a integer'})
+    elif valid_string(email):
+        return JsonResponse({'validation':'enter valid email,must be a string'})   
+      
     try:
-        with transaction.atomic():
+        with transaction.atomic(): 
             user_obj = get_user_model().objects.create(username = username)
             print(user_obj)
             user_obj.set_password(password)
@@ -43,8 +57,10 @@ def get_user_by_id(request):
 
     user_id = params.get('user_id')
 
+    if valid_string(user_id):
+        return JsonResponse({'validation':'enter valid user id ,must be a integer'})   
+   
     try:
-
         get_user_obj = UserProfile.objects.get(id= user_id)
         # print(get_user_obj)
         response.append(get_user_obj.get_json())
@@ -52,7 +68,8 @@ def get_user_by_id(request):
         return JsonResponse({'validation':'success','response':response,'status':True})
     except Exception as e:
         return JsonResponse({'validation':str(e),'status':False})
-    
+    # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
 def get_all_users(request):
     response =[]
 
@@ -76,6 +93,21 @@ def update_user_by_field(request):
     age = params.get('age')
     email = params.get('email')
 
+    if valid_integer(user_id):
+        return JsonResponse({'validation':'enter valid username ,must be a integer'})
+    elif valid_string(username):
+        return JsonResponse({'validation':'enter valid username ,must be a string'})   
+    elif valid_string(password):
+        return JsonResponse({'validation':'enter valid password,must be a string'})  
+    elif valid_string(first_name):
+        return JsonResponse({'validation':'enter valid first_name,must be a string'})   
+    elif valid_string(last_name):
+        return JsonResponse({'validation':'enter valid last_name,must be a string'})    
+    elif valid_integer(age):
+        return JsonResponse({'validation':'enter valid age,must be a integer'})
+    elif valid_string(email):
+        return JsonResponse({'validation':'enter valid email,must be a string'})    
+   
     try:
         with transaction.atomic():
             userprofile_obj = UserProfile.objects.get(id = user_id)
@@ -90,7 +122,6 @@ def update_user_by_field(request):
             return JsonResponse({'validation':'success','status':True})
     except Exception as e:
         return JsonResponse({'validation':str(e),'status':False})
-
         # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 def create_address(request):
@@ -105,6 +136,23 @@ def create_address(request):
     state = params.get('state')
     pincode = params.get('pincode')
 
+    if valid_integer(user_id):
+        return JsonResponse({'validation':'enter valid user_id,must be a integer'})  
+    elif valid_string(building_name):
+        return JsonResponse({'validation':'enter valid building_name,must be a string'})    
+    elif valid_string(street_name):
+        return JsonResponse({'validation':'enter valid street_name,must be a string'})    
+    elif valid_string(locality):
+        return JsonResponse({'validation':'enter valid locality,must be a string'})    
+    elif valid_string(city):
+        return JsonResponse({'validation':'enter valid city,must be a string'})    
+    elif valid_string(district):
+        return JsonResponse({'validation':'enter valid district,must be a string'})    
+    elif valid_string(state):
+        return JsonResponse({'validation':'enter valid state,must be a string'})    
+    elif valid_integer(pincode):
+        return JsonResponse({'validation':'enter valid pincode,must be a integer'})    
+     
     try:
         with transaction.atomic():
             userprofile_obj = UserProfile.objects.get(id = user_id)
@@ -137,6 +185,25 @@ def update_address_by_address_id(request):
     state = params.get('state')
     pincode = params.get('pincode')
 
+    if valid_integer(user_id):
+        return JsonResponse({'validation':'enter valid user_id,must be a integer'})     
+    elif valid_integer(address_id):
+        return JsonResponse({'validation':'enter valid address_id,must be a integer'})  
+    elif valid_string(building_name):
+        return JsonResponse({'validation':'enter valid building_name,must be a string'})    
+    elif valid_string(street_name):
+        return JsonResponse({'validation':'enter valid street_name,must be a string'})    
+    elif valid_string(locality):
+        return JsonResponse({'validation':'enter valid locality,must be a string'})    
+    elif valid_string(city):
+        return JsonResponse({'validation':'enter valid city,must be a string'})    
+    elif valid_string(district):
+        return JsonResponse({'validation':'enter valid district,must be a string'})    
+    elif valid_string(state):
+        return JsonResponse({'validation':'enter valid state,must be a string'})    
+    elif valid_integer(pincode):
+        return JsonResponse({'validation':'enter valid pincode,must be a integer'})    
+     
     try:
         with transaction.atomic():
             userprofile_obj = UserProfile.objects.get(id = user_id)
@@ -161,8 +228,11 @@ def get_address_by_id(request):
     response = []
 
     address_id = params.get('address_id')
-    try:
 
+    if valid_integer(address_id):
+        return JsonResponse({'validation':'enter valid address_id,must be a integer'})     
+  
+    try:
         address_obj = Address.objects.get(id = address_id)
         response.append(address_obj.get_json())
         return JsonResponse({'validation':'success','response':response,'status':True})
@@ -188,6 +258,10 @@ def get_addresses_of_user(request):
     response = []
 
     user_id = params.get('user_id')
+
+    if valid_integer(user_id):
+        return JsonResponse({'validation':'enter valid user_id,must be a integer'})     
+  
     # use related_name =address
     try:
         userprofile = UserProfile.objects.get(id= user_id)
@@ -196,16 +270,18 @@ def get_addresses_of_user(request):
             response.append(address.get_json())
         return JsonResponse({'validation':'success','response':response,'status':True})
     except Exception as e:
-        return JsonResponse({'validation':str(e),'status':False})
-        
+        return JsonResponse({'validation':str(e),'status':False})       
       # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
       
 def delete_user_by_id(request):
     params = json.loads(request.body) 
 
     user_id = params.get('user_id')
-    try:
 
+    if valid_integer(user_id):
+        return JsonResponse({'validation':'enter valid user_id,must be a integer'})     
+  
+    try:
         user_obj = UserProfile.objects.get(id =user_id).delete()
         return JsonResponse({'validation':'success','status':True})
     except Exception as e:
@@ -216,13 +292,15 @@ def delete_address_by_id(request):
     params = json.loads(request.body) 
 
     address_id = params.get('address_id')
+
+    if valid_integer(address_id):
+        return JsonResponse({'validation':'enter valid address_id,must be a integer'})     
+         
     try:
-        
         address_obj = Address.objects.get(id = address_id).delete()
         return JsonResponse({'validation':'success','status':True})
     except Exception as e:
         return JsonResponse({'validation':str(e),'status':False})
-
         # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
           
 def get_users_by_address(request):
@@ -230,6 +308,10 @@ def get_users_by_address(request):
     response = []
 
     address_id = params.get('address_id')
+
+    if valid_integer(address_id):
+        return JsonResponse({'validation':'enter valid address_id,must be a integer'})     
+         
     try:
         address_obj = Address.objects.get(id=address_id)
         multiple_address = address_obj.addresses.all()
