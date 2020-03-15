@@ -87,7 +87,7 @@ def update_user_by_field(request):
 
     user_id = params.get('user_id')
     username = params.get('username')
-    password = params.get('password')
+    # password = params.get('password')
     first_name = params.get('first_name')
     last_name = params.get('last_name')
     age = params.get('age')
@@ -97,15 +97,15 @@ def update_user_by_field(request):
         return JsonResponse({'validation':'enter valid username ,must be a integer'})
     elif valid_string(username):
         return JsonResponse({'validation':'enter valid username ,must be a string'})   
-    elif valid_string(password):
-        return JsonResponse({'validation':'enter valid password,must be a string'})  
+    # elif valid_string(password):
+    #     return JsonResponse({'validation':'enter valid password,must be a string'})  
     elif valid_string(first_name):
         return JsonResponse({'validation':'enter valid first_name,must be a string'})   
     elif valid_string(last_name):
         return JsonResponse({'validation':'enter valid last_name,must be a string'})    
     elif valid_integer(age):
         return JsonResponse({'validation':'enter valid age,must be a integer'})
-    elif valid_string(email):
+    elif valid_email(email):
         return JsonResponse({'validation':'enter valid email,must be a string'})    
    
     try:
@@ -150,8 +150,8 @@ def create_address(request):
         return JsonResponse({'validation':'enter valid district,must be a string'})    
     elif valid_string(state):
         return JsonResponse({'validation':'enter valid state,must be a string'})    
-    elif valid_integer(pincode):
-        return JsonResponse({'validation':'enter valid pincode,must be a integer'})    
+    elif valid_pincode(pincode):
+        return JsonResponse({'validation':'enter valid pincode,must be a integer and only 6 digit required'})    
      
     try:
         with transaction.atomic():
@@ -201,8 +201,8 @@ def update_address_by_address_id(request):
         return JsonResponse({'validation':'enter valid district,must be a string'})    
     elif valid_string(state):
         return JsonResponse({'validation':'enter valid state,must be a string'})    
-    elif valid_integer(pincode):
-        return JsonResponse({'validation':'enter valid pincode,must be a integer'})    
+    elif valid_pincode(pincode):
+        return JsonResponse({'validation':'enter valid pincode,must be a integer and only 6 digit required'})    
      
     try:
         with transaction.atomic():

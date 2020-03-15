@@ -10,7 +10,7 @@ class UserProfile(models.Model):
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
     age = models.PositiveSmallIntegerField()
-    email = models.EmailField(max_length=255,unique=True)
+    email = models.EmailField(max_length=255,unique=False)
     created_on = models.DateTimeField(auto_now_add=True,null=True,blank=True)
     # following= models.ManyToManyField(Store, through = 'Followership',related_name='following',
     # blank =True)
