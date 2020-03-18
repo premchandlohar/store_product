@@ -27,7 +27,7 @@ def create_user(request):
         return JsonResponse({'validation':'enter valid last_name,must be a string'})    
     elif valid_integer(age):
         return JsonResponse({'validation':'enter valid age,must be a integer'})
-    elif valid_string(email):
+    elif valid_email(email):
         return JsonResponse({'validation':'enter valid email,must be a string'})   
       
     try:

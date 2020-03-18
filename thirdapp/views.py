@@ -103,10 +103,7 @@ def create_membership(request):
             return JsonResponse({'validation':'success','status':True})
     except Exception as e:
         return JsonResponse({'validation':str(e), 'status':False})
-
-
-    # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++    
-        
+    # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++           
 def get_membership(request):
     params = json.loads(request.body)
     response = []
