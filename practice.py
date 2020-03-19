@@ -79,8 +79,7 @@ def valid_pincode(integer):
 #     else: 
 #         return False
 # a = 'pawarpankaj@gma.com'
-def valid_email(email):
-   return(True if email==None or not re.match(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)"
+def valid_email(email):return(True if email==None or not re.match(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)"
    , email) or email=='' else False)
 
 
@@ -88,12 +87,11 @@ def valid_email(email):
 #    return(True if email==None or not re.match(r"[^@]+@[^@]+\.[^@]+", email) or email=='' else False)
 
 
-a = 'dflk.jpg'
+# a = 'dflk.jpg'
 
-def valid_image (image):
-    return (True if not (str(image).endswith(('.jpeg','.jpg','.png','.webp')))else False)
+def valid_image (image):return (True if not (str(image).endswith(('.jpeg','.jpg','.png','.webp')))else False)
     
-print(valid_image(a))
+# print(valid_image(a))
 
 
 # def valid_email(email):
@@ -105,10 +103,12 @@ print(valid_image(a))
 #     #     return True   
 #     else: 
 #         return False
+def factorial(n): return 1 if n == 1 else n * factorial(n-1) 
 
+# print(factorial(4))
 
-
-
+def retrieve_major(semver):
+    print(retrieve_major[0])
 # elif type(store_location) != str:
 #     return JsonResponse({'validation':'enter valid location,must be a string'})
 # elif type(store_address) != str:
