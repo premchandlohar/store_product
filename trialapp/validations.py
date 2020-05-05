@@ -475,4 +475,160 @@ def validate_update_product_by_field(request):
         # print(e)
         return False, str(e), None
 
-        # ---------------------------------validate update product------------------------------------
+        # ---------------------------------validate_delete_store_by_id------------------------------------
+
+def validate_delete_store_by_id(params):
+    try:
+        store_id = int(params.get('store_id'))
+
+        if valid_integer(store_id):
+            return True,'enter valid store id,must be a integer',None
+
+        kwarg = {
+            "store_id":store_id
+        }
+        return True, "validation successfully",kwarg
+
+    except Exception as e:
+        # print(e)
+        return False, str(e), None
+
+             # ---------------------------------validate_delete_category_by_id------------------------------------
+
+def validate_delete_category_by_id(params):
+    try:
+        category_id = int(params.get('category_id'))
+
+        if valid_integer(category_id):
+            return True,'enter valid category id,must be a integer',None
+
+        kwarg = {
+            "category_id":category_id
+        }
+        return True, "validation successfully",kwarg
+
+    except Exception as e:
+        # print(e)
+        return False, str(e), None
+
+          # ---------------------------------validate_delete_subcategory_by_id------------------------------------
+
+def validate_delete_subcategory_by_id(params):
+    try:
+        subcategory_id = int(params.get('subcategory_id'))
+
+        if valid_integer(subcategory_id):
+            return True,'enter valid subcategory id,must be a integer',None
+
+        kwarg = {
+            "subcategory_id":subcategory_id
+        }
+        return True, "validation successfully",kwarg
+
+    except Exception as e:
+        # print(e)
+        return False, str(e), None
+
+          # ---------------------------------validate_delete_product_by_id------------------------------------
+
+def validate_delete_product_by_id(params):
+    try:
+        product_id = int(params.get('product_id'))
+
+        if valid_integer(product_id):
+            return True,'enter valid product id,must be a integer',None
+
+        kwarg = {
+            "product_id":product_id
+        }
+        return True, "validation successfully",kwarg
+
+    except Exception as e:
+        # print(e)
+        return False, str(e), None
+
+        # --------------------------validate add follower to store--------------------------------
+
+def validate_add_follower_to_store(params):
+    try:
+        store_id = int(params.get('store_id'))
+        user_id = int(params.get('user_id'))
+
+        if valid_integer(store_id):
+            return True,'enter valid store_id,must be a integer',None
+        if valid_integer(user_id):
+            return True,'enter valid user_id,must be a integer',None
+
+        kwarg = {
+            "store_id":store_id,
+            "user_id":user_id
+        }
+
+        return True, "validation successfully",kwarg
+
+    except Exception as e:
+        # print(e)
+        return False, str(e), None
+
+        # -------------------------------validate get followers by store--------------------------------
+
+def validate_get_followers_by_store(params):
+    try:
+        store_id = int(params.get('store_id'))
+        # user_id = int(params.get('user_id'))
+
+        if valid_integer(store_id):
+            return True,'enter valid store_id,must be a integer',None
+
+        kwarg = {
+            "store_id":store_id
+        }
+            
+        return True, "validation successfully",kwarg
+
+    except Exception as e:
+        # print(e)
+        return False, str(e), None
+
+     # -------------------------------validate get stores by follower--------------------------------
+
+def validate_get_stores_by_follower(params):
+    try:
+        user_id = int(params.get('user_id'))
+        # user_id = int(params.get('user_id'))
+
+        if valid_integer(user_id):
+            return True,'enter valid user_id,must be a integer',None
+
+        kwarg = {
+            "user_id":user_id
+        }
+            
+        return True, "validation successfully",kwarg
+
+    except Exception as e:
+        # print(e)
+        return False, str(e), None
+
+        # -------------------------------remove_follower_from_store_for_some_reason-------------------------
+
+def validate_remove_follower_from_store_for_some_reason(params):
+    try:
+        followership_id = int(params.get('followership_id'))
+        reason = int(params.get('reason'))
+        if valid_integer(followership_id):
+            return True,'enter valid followership_id,must be a integer',None
+        if valid_integer(reason):
+            return True,'enter valid reason,must be a integer',None
+
+        kwarg = {
+            "followership_id":followership_id,
+            "reason":reason
+        }
+      
+        return True, "validation successfully",kwarg
+
+    except Exception as e:
+        # print(e)
+        return False, str(e), None
+

@@ -800,181 +800,350 @@ def update_product_by_field(request):
     #     except Exception as e:
     #         return JsonResponse({'validation':str(e),'status':False})
      # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        
+    
 def delete_store_by_id(request):
-    params = json.loads(request.body)
-
-    store_id = params.get('store_id')
-
-    if valid_integer(store_id):
-        return JsonResponse({'validation':'enter valid store id,must be a integer'}) 
-
     try:
-        store_obj = Store.objects.get(id= store_id).delete()
-        return JsonResponse({'validation':'success','status':True})
+        params = json.loads(request.body)
     except Exception as e:
-        return JsonResponse({'validation':str(e),'status':False})
+        # print(e)
+        return JsonResponse({"validation" : str(e), "status" : False})
+    status, message, data = validate_delete_store_by_id(params)
+    if status==False:
+        return JsonResponse({"validation": message, "status": status })
+
+    message,status = delete_store_by_id_function(data)
+
+    if status:
+        return JsonResponse({"validation": message, "status": status })
+    else:
+        return JsonResponse({"validation": message, "status": status })
+
+        
+    # try:
+    #     Store.objects.get(id = data["region_id"]).delete()
+    #     return JsonResponse({"validation": "success", "status": True})
+    # except ObjectDoesNotExist :
+    #     return JsonResponse({"validation": "invalid id", "status" : False})
+    # except Exception as e:
+        # return JsonResponse({"validation" : str(e), "status" : False})
+    #-------------------
+    # def delete_store_by_id(request):
+    #     params = json.loads(request.body)
+
+    #     store_id = params.get('store_id')
+
+    #     if valid_integer(store_id):
+    #         return JsonResponse({'validation':'enter valid store id,must be a integer'}) 
+
+    #     try:
+    #         store_obj = Store.objects.get(id= store_id).delete()
+    #         return JsonResponse({'validation':'success','status':True})
+    #     except Exception as e:
+    #         return JsonResponse({'validation':str(e),'status':False})
     # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 def delete_category_by_id(request):
-    params = json.loads(request.body)
-
-    category_id = params.get('category_id')
-    if valid_integer(category_id):
-        return JsonResponse({'validation':'enter valid category id,must be a integer'})
-   
     try:
-        category_obj = Category.objects.get(id= category_id).delete()
-        return JsonResponse({'validation':'success','status':True})
+        params = json.loads(request.body)
     except Exception as e:
-        return JsonResponse({'validation':str(e),'status':False})   
-    # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        # print(e)
+        return JsonResponse({"validation" : str(e), "status" : False})
+    status, message, data = validate_delete_category_by_id(params)
+    if status==False:
+        return JsonResponse({"validation": message, "status": status })
+
+    message,status = delete_category_by_id_function(data)
+
+    if status:
+        return JsonResponse({"validation": message, "status": status })
+    else:
+        return JsonResponse({"validation": message, "status": status })
+
+    # def delete_category_by_id(request):
+    #     params = json.loads(request.body)
+
+    #     category_id = params.get('category_id')
+    #     if valid_integer(category_id):
+    #         return JsonResponse({'validation':'enter valid category id,must be a integer'})
+    
+    #     try:
+    #         category_obj = Category.objects.get(id= category_id).delete()
+    #         return JsonResponse({'validation':'success','status':True})
+    #     except Exception as e:
+    #         return JsonResponse({'validation':str(e),'status':False})   
+    #     # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 def delete_subcategory_by_id(request):
-    params = json.loads(request.body)
-
-    subcategory_id = params.get('subcategory_id')
-    if valid_integer(subcategory_id):
-        return JsonResponse({'validation':'enter valid subcategory id,must be a integer'})
-   
     try:
-        subcategory_obj = Subcategory.objects.get(id= subcategory_id).delete()
-        return JsonResponse({'validation':'success','status':True})
+        params = json.loads(request.body)
     except Exception as e:
-        return JsonResponse({'validation':str(e),'status':False})   
-    # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        # print(e)
+        return JsonResponse({"validation" : str(e), "status" : False})
+    status, message, data = validate_delete_subcategory_by_id(params)
+    if status==False:
+        return JsonResponse({"validation": message, "status": status })
+
+    message,status = delete_subcategory_by_id_function(data)
+
+    if status:
+        return JsonResponse({"validation": message, "status": status })
+    else:
+        return JsonResponse({"validation": message, "status": status })
+
+    # def delete_subcategory_by_id(request):
+    #     params = json.loads(request.body)
+
+    #     subcategory_id = params.get('subcategory_id')
+    #     if valid_integer(subcategory_id):
+    #         return JsonResponse({'validation':'enter valid subcategory id,must be a integer'})
+    
+    #     try:
+    #         subcategory_obj = Subcategory.objects.get(id= subcategory_id).delete()
+    #         return JsonResponse({'validation':'success','status':True})
+    #     except Exception as e:
+    #         return JsonResponse({'validation':str(e),'status':False})   
+        # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 def delete_product_by_id(request):
-    params = json.loads(request.body)
-
-    product_id = params.get('product_id')
-
-    if valid_integer(product_id):
-        return JsonResponse({'validation':'enter valid product id,must be a integer'})
-   
     try:
-        product_obj = Product.objects.get(id = product_id).delete()
-        return JsonResponse({'validation':'success','status':True})
+        params = json.loads(request.body)
     except Exception as e:
-        return JsonResponse({'validation':str(e),'status':False})   
+        # print(e)
+        return JsonResponse({"validation" : str(e), "status" : False})
+    status, message, data = validate_delete_product_by_id(params)
+    if status==False:
+        return JsonResponse({"validation": message, "status": status })
+
+    message,status = delete_product_by_id_function(data)
+
+    if status:
+        return JsonResponse({"validation": message, "status": status })
+    else:
+        return JsonResponse({"validation": message, "status": status })
+
+    # def delete_product_by_id(request):
+    #     params = json.loads(request.body)
+
+    #     product_id = params.get('product_id')
+
+    #     if valid_integer(product_id):
+    #         return JsonResponse({'validation':'enter valid product id,must be a integer'})
+    
+    #     try:
+    #         product_obj = Product.objects.get(id = product_id).delete()
+    #         return JsonResponse({'validation':'success','status':True})
+    #     except Exception as e:
+    #         return JsonResponse({'validation':str(e),'status':False})   
     # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 def add_follower_to_store(request):
-    params = json.loads(request.body)
-
-    store_id = params.get('store_id')
-    user_id = params.get('user_id')
-
-    if valid_integer(store_id):
-        return JsonResponse({'validation':'enter valid store id,must be a integer'})
-    if valid_integer(user_id):
-        return JsonResponse({'validation':'enter valid user id,must be a integer'})
-   
     try:
-        with transaction.atomic():
-            store_obj = Store.objects.get(id=store_id)
-            user_obj = UserProfile.objects.get(id=user_id)
-
-            followership_obj = Followership.objects.create(
-                store = store_obj, 
-                user = user_obj
-                )
-            # print(followership_obj)
-            return JsonResponse({'validation':'success','status':True})
+        params = json.loads(request.body)         
     except Exception as e:
-        return JsonResponse({'validation':str(e), 'status':False})
-        # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        return JsonResponse({'validation':str(e),'status':False})
+   
+    status,message,data = validate_add_follower_to_store(params)
+    if status==False:
+        return JsonResponse({'validation':message,'status':status})
+    
+    follower_data,status = add_follower_to_store_function(data)
+    if status:
+        return JsonResponse({'validation':'successful','status':status})
+    else:
+        return JsonResponse({'validation':'unsuccessful','status':status})
+
+
+    # def add_follower_to_store(request):
+    #     params = json.loads(request.body)
+
+    #     store_id = params.get('store_id')
+    #     user_id = params.get('user_id')
+
+    #     if valid_integer(store_id):
+    #         return JsonResponse({'validation':'enter valid store id,must be a integer'})
+    #     if valid_integer(user_id):
+    #         return JsonResponse({'validation':'enter valid user id,must be a integer'})
+    
+    #     try:
+    #         with transaction.atomic():
+    #             store_obj = Store.objects.get(id=store_id)
+    #             user_obj = UserProfile.objects.get(id=user_id)
+
+    #             followership_obj = Followership.objects.create(
+    #                 store = store_obj, 
+    #                 user = user_obj
+    #                 )
+    #             # print(followership_obj)
+    #             return JsonResponse({'validation':'success','status':True})
+    #     except Exception as e:
+    #         return JsonResponse({'validation':str(e), 'status':False})
+    #         # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 def get_followers_by_store(request):
-    params = json.loads(request.body)
-    response = []
 
-    store_id = params.get('store_id')
-    if valid_integer(store_id):
-        return JsonResponse({'validation':'enter valid store id,must be a integer'})
-   
     try:
-        store_obj = Store.objects.get(id=store_id)
-        follower_obj = store_obj.follower.all()
-        # print(follower_obj)
-        for follower in follower_obj:
-            response.append(follower.first_name)
-        return JsonResponse({'validation':'success','response':response,'status':True})
+        params = json.loads(request.body)         
     except Exception as e:
-        return JsonResponse({'validation':str(e), 'status':False})
+        return JsonResponse({'validation':str(e),'status':False})
+
+    status,message,data = validate_get_followers_by_store(params)
+    # print(status,message,data)
+    if status==False:
+        return JsonResponse({'validation':message,'status':status})
+
+    follower_data,status = get_followers_by_store_function(data)
+    # print(status,message,category_data)
+
+    if status:
+        return JsonResponse({'validation':'successful','data':follower_data})
+    else:
+         return JsonResponse({'validation':'unsuccessful','data':status})
+             
+
+    # def get_followers_by_store(request):
+    #     params = json.loads(request.body)
+    #     response = []
+
+    #     store_id = params.get('store_id')
+    #     if valid_integer(store_id):
+    #         return JsonResponse({'validation':'enter valid store id,must be a integer'})
+    
+    #     try:
+    #         store_obj = Store.objects.get(id=store_id)
+    #         follower_obj = store_obj.follower.all()
+    #         # print(follower_obj)
+    #         for follower in follower_obj:
+    #             response.append(follower.first_name)
+    #         return JsonResponse({'validation':'success','response':response,'status':True})
+    #     except Exception as e:
+    #         return JsonResponse({'validation':str(e), 'status':False})
         # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 def get_stores_by_follower(request):
-    params = json.loads(request.body)
-    response = []
 
-    user_id = params.get('user_id')
-
-    if valid_integer(user_id):
-        return JsonResponse({'validation':'enter valid user id,must be a integer'})
-      
     try:
-        user_obj = UserProfile.objects.get(id=user_id)
-        stores = user_obj.followers.all()
-        # print(stores)
-        for following in stores:
-            response.append(following.store_name)
-        # print(response)
-        return JsonResponse({'validation':'success','response':response,'status':True})
+        params = json.loads(request.body)         
     except Exception as e:
-        return JsonResponse({'validation':str(e), 'status':False})
+        return JsonResponse({'validation':str(e),'status':False})
+
+    status,message,data = validate_get_stores_by_follower(params)
+    # print(status,message,data)
+    if status==False:
+        return JsonResponse({'validation':message,'status':status})
+
+    store_data,status = get_stores_by_follower_function(data)
+    # print(status,message,category_data)
+
+    if status:
+        return JsonResponse({'validation':'successful','data':store_data})
+    else:
+         return JsonResponse({'validation':'unsuccessful','data':status})
+             
+    # def get_stores_by_follower(request):
+    #     params = json.loads(request.body)
+    #     response = []
+
+    #     user_id = params.get('user_id')
+
+    #     if valid_integer(user_id):
+    #         return JsonResponse({'validation':'enter valid user id,must be a integer'})
+        
+    #     try:
+    #         user_obj = UserProfile.objects.get(id=user_id)
+    #         stores = user_obj.followers.all()
+    #         # print(stores)
+    #         for following in stores:
+    #             response.append(following.store_name)
+    #         # print(response)
+    #         return JsonResponse({'validation':'success','response':response,'status':True})
+    #     except Exception as e:
+    #         return JsonResponse({'validation':str(e), 'status':False})
     #  +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++   
 
 def get_all_followers(request):
-    response = []
+    follower_data, status, message = get_all_followers_function()
+    print( follower_data, status, message)
+    if status:
+        return JsonResponse({'validation' : message, "data" : follower_data,"status":status})
+    else:
+        return JsonResponse({'validation' : message, "status" : status})
 
-    try:       
-        user_obj = Followership.objects.all()
-        
-        for followers in user_obj:
-            response.append(followers.user.first_name)
-        return JsonResponse({'validation':'success','response':response,'status':True})
-    except Exception as e:
-        return JsonResponse({'validation':str(e),'status':False})
+    # def get_all_followers(request):
+    #     response = []
+    #     print(response)
+
+    #     try:       
+    #         user_obj = Followership.objects.all()
+    #         print(user_obj)
+            
+    #         for obj in user_obj:
+    #             # # print(obj)
+    #             # if obj.user.first_name==None:
+    #             #     continue
+
+    #             response.append(obj.get_json())
+    #         return JsonResponse({'validation':'success','response':response,'status':True})
+
+        # except Exception as e:
+        #     return JsonResponse({'validation':str(e),'status':False})
         # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++        
 
-def remove_follower_from_store(request):
-    params = json.loads(request.body)
+    # def remove_follower_from_store(request):
+    #     params = json.loads(request.body)
 
-    followership_id = params.get('followership_id')
+    #     followership_id = params.get('followership_id')
 
-    if valid_integer(followership_id):
-        return JsonResponse({'validation':'enter valid followership id,must be a integer'})   
-    
-    try:
-        followership_obj = Followership.objects.get(id=followership_id)
-        followership_obj.user==None
-        followership_obj.savef()
-        return JsonResponse({'validation':'success','status':True})
-    except Exception as e:
-        return JsonResponse({'validation':str(e), 'status':False})
+    #     if valid_integer(followership_id):
+    #         return JsonResponse({'validation':'enter valid followership id,must be a integer'})   
+        
+    #     try:
+    #         followership_obj = Followership.objects.get(id=followership_id)
+    #         followership_obj.user==None
+    #         followership_obj.savef()
+    #         return JsonResponse({'validation':'success','status':True})
+    #     except Exception as e:
+    #         return JsonResponse({'validation':str(e), 'status':False})
     # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 def remove_follower_from_store_for_some_reason(request):
-    params = json.loads(request.body)
-
-    followership_id = params.get('followership_id')
-    reason = params.get('reason')
-
-    if valid_integer(followership_id):
-        return JsonResponse({'validation':'enter valid followership id,must be a integer'})
-    if valid_integer(reason):
-        return JsonResponse({'validation':'enter valid reason,must be a integer'})   
-    
     try:
-        followership_obj = Followership.objects.get(id=followership_id)
-        followership_obj.user = None
-        followership_obj.reason = reason
-        followership_obj.save()
-        
-        return JsonResponse({'validation':'success','status':True,})
+        params = json.loads(request.body)
     except Exception as e:
-        return JsonResponse({'validation':str(e), 'status':False})
+        # print(e)
+        return JsonResponse({"validation" : str(e), "status" : False})
+    status, message, data = validate_remove_follower_from_store_for_some_reason(params)
+    print( status, message, data)
+    if status==False:
+        return JsonResponse({"validation": message, "status": status })
+
+    message,status = remove_follower_from_store_for_some_reason_function(data)
+    print(message,status)
+
+    if status:
+        return JsonResponse({"validation": message, "status": status })
+    else:
+        return JsonResponse({"validation": message, "status": status })
+
+    # def remove_follower_from_store_for_some_reason(request):
+    #     params = json.loads(request.body)
+
+    #     followership_id = params.get('followership_id')
+    #     reason = params.get('reason')
+
+    #     if valid_integer(followership_id):
+    #         return JsonResponse({'validation':'enter valid followership id,must be a integer'})
+    #     if valid_integer(reason):
+    #         return JsonResponse({'validation':'enter valid reason,must be a integer'})   
+        
+    #     try:
+    #         followership_obj = Followership.objects.get(id=followership_id)
+    #         followership_obj.user = None
+    #         followership_obj.reason = reason
+    #         followership_obj.save()
+            
+    #         return JsonResponse({'validation':'success','status':True,})
+    #     except Exception as e:
+    #         return JsonResponse({'validation':str(e), 'status':False})
     # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   
 
@@ -984,6 +1153,10 @@ def remove_follower_from_store_for_some_reason(request):
 
 
        
+
+
+
+
 
 #         #  **************************************************************************************************************
 

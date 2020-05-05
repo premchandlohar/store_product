@@ -186,7 +186,26 @@ class Followership(models.Model):
     user = models.ForeignKey(UserProfile, on_delete=models.CASCADE,null=True,blank=True)
     reason = models.IntegerField( choices=REASON_CHOICES,null=True,blank=True)
     
-
+     
+    # def get_json(self):
+    #     if self.user==None:
+    #         return {
+    #             "store_name" : self.store.store_name
+    #             # 'first_name':self.user.first_name,
+    #         }
+    #     else:
+    #         return {
+    #             "follower" : self.user.first_name
+    #         }
+               
+    def get_json(self):
+        if self.user == None:
+            return self.store.store_name+': unfollow'
+        else:
+            return self.store.store_name + ': '  +self.user.first_name
+             
+             
+             
     def __str__(self):
         if self.user == None:
             return self.store.store_name

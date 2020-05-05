@@ -1,6 +1,7 @@
 from .models import *
 from django.db import transaction
 from django.core.exceptions import ObjectDoesNotExist
+# from new_users.models import *
 
 
 def create_store_function(data):
@@ -341,5 +342,133 @@ def upadte_product_by_field_function(data):
             return {'category data':product_data},True
     except Exception as e:
         return None,False
+
+        # ------------------------delete store by id----------------------------------------------
+
+def delete_store_by_id_function(data):
+    try:
+        store_data = Store.objects.get(id=data['store_id']).delete()
+        return 'successfully delete',True
+    except ObjectDoesNotExist :
+        return "invalid id", False
+
+    except Exception as e:
+        return None,False
+
+          # ------------------------delete category by id----------------------------------------------
+
+def delete_category_by_id_function(data):
+    try:
+        category_data = Category.objects.get(id=data['category_id']).delete()
+        return 'successfully delete',True
+    except ObjectDoesNotExist :
+        return "invalid id", False
+
+    except Exception as e:
+        return None,False
         
+               # ------------------------delete subcategory by id----------------------------------------------
+
+def delete_subcategory_by_id_function(data):
+    try:
+        subcategory_data = Subcategory.objects.get(id=data['subcategory_id']).delete()
+        return 'successfully delete',True
+    except ObjectDoesNotExist :
+        return "invalid id", False
+
+    except Exception as e:
+        return None,False
+
+                 # ------------------------delete product by id----------------------------------------------
+
+def delete_product_by_id_function(data):
+    try:
+        product_data = Product.objects.get(id=data['product_id']).delete()
+        return 'successfully delete',True
+    except ObjectDoesNotExist :
+        return "invalid id", False
+
+    except Exception as e:
+        return None,False
+
+            # ------------------------add follower to store----------------------------------------------
+
+def add_follower_to_store_function(data):
+    try:
+        store_data = Store.objects.get(id=data['store_id'])
+        user_data = UserProfile.objects.get(id=data['user_id'])
+
+        follower_data = Followership.objects.create(
+                store = store_data,
+                user =user_data
+            )
+                
+        return {'follower_data':follower_data},True
+    except Exception as e:
+        return None,False
+
+         # ------------------------get followers by store----------------------------------------------
+
+def get_followers_by_store_function(data):
+    try:
+        response =[]
+        store_data = Store.objects.get(id=data['store_id'])
+        follower_data = store_data.follower.all()
+
+        for follower in follower_data:
+            response.append(follower.first_name)
+        return {'follower_data':response},True
+        
+    except ObjectDoesNotExist:
+        return 'no followers',False
+    except Exception as e:
+        return None,False
+
+         # ------------------------add follower to store----------------------------------------------
+
+def get_stores_by_follower_function(data):
+    try:
+        response =[]
+        user_data = UserProfile.objects.get(id=data['user_id'])
+        store_data = user_data.followers.all()
+
+        for store in store_data:
+            response.append(store.store_name)
+        return {'store':response},True
+
+    except ObjectDoesNotExist:
+        return 'no following',False   
+    except Exception as e:
+        return None,False
+
+           # ------------------------add follower to store----------------------------------------------
+
+def get_all_followers_function():
+    try:
+        response =[]
+        follower_data = Followership.objects.all()
+        # print("follower_data",follower_data)
+
+        for followers in follower_data:
+            # print('ggg',followers)
+            response.append(followers.get_json())
+        # print(response)
+        return response,True,'successful'
+   
+    except Exception as e:
+        return None,False,'unsuccessful' 
+
+        # -------------def remove_follower_from_store_for_some_reason_function----------------------
+
+def remove_follower_from_store_for_some_reason_function(data):
+    try:
+        followership_data = Followership.objects.get(id=data['followership_id'])
+        followership_data.user = None
+        followership_data.reason = data['reason']
+        followership_data.save()
+            
+        return 'success',True
+ 
+    except Exception as e:
+        return 'unsuccess',False
 
