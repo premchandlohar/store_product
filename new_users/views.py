@@ -1,54 +1,75 @@
 
-from django.contrib.auth import get_user_model
-from django.db import transaction
+# from django.contrib.auth import get_user_model
 from django.http import JsonResponse
-import json
 from .models import *
+import json
+from django.db import transaction
 from validator import *
+from .validations import *
+from .helpers import *
+
 
 # Create your views here.
 def create_user(request):
-    params = json.loads(request.body)
+    status, message, data = validate_create_user(request)
+    # print( status, message, data)
+    # print(status)
+    if status==False:
+        return JsonResponse({"validation": message, "status": status })
+    # else:
+        # return JsonResponse({"validation": message, "status": status })
 
-    username = params.get('username')
-    password = params.get('password')
-    first_name = params.get('first_name')
-    last_name = params.get('last_name')
-    age = params.get('age')
-    email = params.get('email')
+    user_data, status = create_user_function(data)
+    # print(store_data)
+    if status:
+        # print(status)
+        return JsonResponse({"validation message" : "successful", "status" : status })
+    else:
+        return JsonResponse({"validation message" : "unsuccessful", "status" :status })
+
+
+# def create_user(request):
+#     params = json.loads(request.body)
+
+#     username = params.get('username')
+#     password = params.get('password')
+#     first_name = params.get('first_name')
+#     last_name = params.get('last_name')
+#     age = params.get('age')
+#     email = params.get('email')
     
-    if valid_string(username):
-        return JsonResponse({'validation':'enter valid username ,must be a string'})   
-    elif valid_string(password):
-        return JsonResponse({'validation':'enter valid password,must be a string'})  
-    elif valid_string(first_name):
-        return JsonResponse({'validation':'enter valid first_name,must be a string'})   
-    elif valid_string(last_name):
-        return JsonResponse({'validation':'enter valid last_name,must be a string'})    
-    elif valid_integer(age):
-        return JsonResponse({'validation':'enter valid age,must be a integer'})
-    elif valid_email(email):
-        return JsonResponse({'validation':'enter valid email,must be a string'})   
+#     if valid_string(username):
+#         return JsonResponse({'validation':'enter valid username ,must be a string'})   
+#     elif valid_string(password):
+#         return JsonResponse({'validation':'enter valid password,must be a string'})  
+#     elif valid_string(first_name):
+#         return JsonResponse({'validation':'enter valid first_name,must be a string'})   
+#     elif valid_string(last_name):
+#         return JsonResponse({'validation':'enter valid last_name,must be a string'})    
+#     elif valid_integer(age):
+#         return JsonResponse({'validation':'enter valid age,must be a integer'})
+#     elif valid_email(email):
+#         return JsonResponse({'validation':'enter valid email,must be a string'})   
       
-    try:
-        with transaction.atomic(): 
-            user_obj = get_user_model().objects.create(username = username)
-            print(user_obj)
-            user_obj.set_password(password)
-            user_obj.save()
+#     try:
+#         with transaction.atomic(): 
+#             user_obj = get_user_model().objects.create(username = username)
+#             print(user_obj)
+#             user_obj.set_password(password)
+#             user_obj.save()
 
-            userprofile_obj = UserProfile.objects.create(
-                user = user_obj,
-                first_name = first_name,
-                last_name = last_name,
-                age = age,
-                email = email,
-            )
-            # userprofile_obj.save()
-            # print(userprofile_obj)
-            return JsonResponse({'validation':'success','status':True})
-    except Exception as e:
-        return JsonResponse({'validation':str(e),'status':False})
+#             userprofile_obj = UserProfile.objects.create(
+#                 user = user_obj,
+#                 first_name = first_name,
+#                 last_name = last_name,
+#                 age = age,
+#                 email = email,
+#             )
+#             # userprofile_obj.save()
+#             # print(userprofile_obj)
+#             return JsonResponse({'validation':'success','status':True})
+#     except Exception as e:
+#         return JsonResponse({'validation':str(e),'status':False})
         # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 def get_user_by_id(request):
