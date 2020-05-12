@@ -37,7 +37,6 @@ class Store(models.Model):
             'created_on':str(self.created_on),
         }
     # ******************************************************************************************
-
 class Category(models.Model):
     store = models.ForeignKey(Store, on_delete=models.CASCADE)
     category_name = models.CharField(max_length=30)
@@ -141,8 +140,7 @@ class Product(models.Model):
     product_description  = models.TextField(max_length=801)
     product_image  = models.ImageField(upload_to = 'uploads',null = True,blank= True)
     created_on = models.DateTimeField(auto_now_add=True,null=True,blank=True)
-
-    
+  
     def __str__(self):
         return self.product_name
  
@@ -174,7 +172,6 @@ class Product(models.Model):
             'created_on':str(self.created_on),
         }
         # *****************************************************************************************
-
 class Followership(models.Model):  
     REASON_CHOICES = (
         (1,'not intrested'),
@@ -182,7 +179,7 @@ class Followership(models.Model):
         (3,'not liked'),
         (4,'other')
     )
-    store = models.ForeignKey(Store, on_delete=models.CASCADE)
+    store = models.ForeignKey(Store, on_delete=models.CASCADE,related_name='users')
     user = models.ForeignKey(UserProfile, on_delete=models.CASCADE,null=True,blank=True)
     reason = models.IntegerField( choices=REASON_CHOICES,null=True,blank=True)
     

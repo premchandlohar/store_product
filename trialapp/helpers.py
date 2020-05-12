@@ -413,11 +413,17 @@ def get_followers_by_store_function(data):
     try:
         response =[]
         store_data = Store.objects.get(id=data['store_id'])
-        follower_data = store_data.follower.all()
+        follower_data = store_data.users.all()
+        print(follower_data)
 
         for follower in follower_data:
-            response.append(follower.first_name)
-        return {'follower_data':response},True
+            response.append({
+                'store_name':follower.store.store_name,
+                'followership_id':follower.id,
+                'user_id':follower.user.id,
+                'follower_name':follower.user.first_name
+                })
+        return {'follower':response},True
         
     except ObjectDoesNotExist:
         return 'no followers',False
@@ -433,7 +439,10 @@ def get_stores_by_follower_function(data):
         store_data = user_data.followers.all()
 
         for store in store_data:
-            response.append(store.store_name)
+            response.append({
+                'store_id':store.id,
+                'store_name':store.store_name})
+                # 'follower_name':store.follower.first_name})
         return {'store':response},True
 
     except ObjectDoesNotExist:
@@ -471,4 +480,5 @@ def remove_follower_from_store_for_some_reason_function(data):
  
     except Exception as e:
         return 'unsuccess',False
+        # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++|
 

@@ -28,49 +28,49 @@ def create_user(request):
         return JsonResponse({"validation message" : "unsuccessful", "status" :status })
 
 
-# def create_user(request):
-#     params = json.loads(request.body)
+    # def create_user(request):
+    #     params = json.loads(request.body)
 
-#     username = params.get('username')
-#     password = params.get('password')
-#     first_name = params.get('first_name')
-#     last_name = params.get('last_name')
-#     age = params.get('age')
-#     email = params.get('email')
-    
-#     if valid_string(username):
-#         return JsonResponse({'validation':'enter valid username ,must be a string'})   
-#     elif valid_string(password):
-#         return JsonResponse({'validation':'enter valid password,must be a string'})  
-#     elif valid_string(first_name):
-#         return JsonResponse({'validation':'enter valid first_name,must be a string'})   
-#     elif valid_string(last_name):
-#         return JsonResponse({'validation':'enter valid last_name,must be a string'})    
-#     elif valid_integer(age):
-#         return JsonResponse({'validation':'enter valid age,must be a integer'})
-#     elif valid_email(email):
-#         return JsonResponse({'validation':'enter valid email,must be a string'})   
-      
-#     try:
-#         with transaction.atomic(): 
-#             user_obj = get_user_model().objects.create(username = username)
-#             print(user_obj)
-#             user_obj.set_password(password)
-#             user_obj.save()
+    #     username = params.get('username')
+    #     password = params.get('password')
+    #     first_name = params.get('first_name')
+    #     last_name = params.get('last_name')
+    #     age = params.get('age')
+    #     email = params.get('email')
+        
+    #     if valid_string(username):
+    #         return JsonResponse({'validation':'enter valid username ,must be a string'})   
+    #     elif valid_string(password):
+    #         return JsonResponse({'validation':'enter valid password,must be a string'})  
+    #     elif valid_string(first_name):
+    #         return JsonResponse({'validation':'enter valid first_name,must be a string'})   
+    #     elif valid_string(last_name):
+    #         return JsonResponse({'validation':'enter valid last_name,must be a string'})    
+    #     elif valid_integer(age):
+    #         return JsonResponse({'validation':'enter valid age,must be a integer'})
+    #     elif valid_email(email):
+    #         return JsonResponse({'validation':'enter valid email,must be a string'})   
+        
+    #     try:
+    #         with transaction.atomic(): 
+    #             user_obj = get_user_model().objects.create(username = username)
+    #             print(user_obj)
+    #             user_obj.set_password(password)
+    #             user_obj.save()
 
-#             userprofile_obj = UserProfile.objects.create(
-#                 user = user_obj,
-#                 first_name = first_name,
-#                 last_name = last_name,
-#                 age = age,
-#                 email = email,
-#             )
-#             # userprofile_obj.save()
-#             # print(userprofile_obj)
-#             return JsonResponse({'validation':'success','status':True})
-#     except Exception as e:
-#         return JsonResponse({'validation':str(e),'status':False})
-        # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    #             userprofile_obj = UserProfile.objects.create(
+    #                 user = user_obj,
+    #                 first_name = first_name,
+    #                 last_name = last_name,
+    #                 age = age,
+    #                 email = email,
+    #             )
+    #             # userprofile_obj.save()
+    #             # print(userprofile_obj)
+    #             return JsonResponse({'validation':'success','status':True})
+    #     except Exception as e:
+    #         return JsonResponse({'validation':str(e),'status':False})
+            # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 def get_user_by_id(request):
     response =[]
@@ -157,24 +157,24 @@ def create_address(request):
     state = params.get('state')
     pincode = params.get('pincode')
 
-    if valid_integer(user_id):
-        return JsonResponse({'validation':'enter valid user_id,must be a integer'})  
-    elif valid_string(building_name):
-        return JsonResponse({'validation':'enter valid building_name,must be a string'})    
-    elif valid_string(street_name):
-        return JsonResponse({'validation':'enter valid street_name,must be a string'})    
-    elif valid_string(locality):
-        return JsonResponse({'validation':'enter valid locality,must be a string'})    
-    elif valid_string(city):
-        return JsonResponse({'validation':'enter valid city,must be a string'})    
-    elif valid_string(district):
-        return JsonResponse({'validation':'enter valid district,must be a string'})    
-    elif valid_string(state):
-        return JsonResponse({'validation':'enter valid state,must be a string'})    
-    elif valid_pincode(pincode):
-        return JsonResponse({'validation':'enter valid pincode,must be a integer and only 6 digit required'})    
-     
     try:
+        if valid_integer(user_id):
+            return JsonResponse({'validation':'enter valid user_id,must be a integer'})  
+        elif valid_string(building_name):
+            return JsonResponse({'validation':'enter valid building_name,must be a string'})    
+        elif valid_string(street_name):
+            return JsonResponse({'validation':'enter valid street_name,must be a string'})    
+        elif valid_string(locality):
+            return JsonResponse({'validation':'enter valid locality,must be a string'})    
+        elif valid_string(city):
+            return JsonResponse({'validation':'enter valid city,must be a string'})    
+        elif valid_string(district):
+            return JsonResponse({'validation':'enter valid district,must be a string'})    
+        elif valid_string(state):
+            return JsonResponse({'validation':'enter valid state,must be a string'})    
+        elif valid_pincode(pincode):
+            return JsonResponse({'validation':'enter valid pincode,must be a integer and only 6 digit required'})    
+     
         with transaction.atomic():
             userprofile_obj = UserProfile.objects.get(id = user_id)
             address_obj = Address.objects.create(

@@ -24,6 +24,7 @@ def create_store(request):
         return JsonResponse({"validation message" : "successful", "status" : status })
     else:
         return JsonResponse({"validation message" : "unsuccessful", "status" :status })
+        
     # params = request.POST
 
     # store_name = params.get('store_name')
