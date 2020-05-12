@@ -9,7 +9,7 @@ def create_user_function(data):
     try:
         with transaction.atomic():
             user_obj = get_user_model().objects.create(username = data['username'])
-#             print(user_obj)
+            # print(user_obj)
             user_obj.set_password(data['password'])
             user_obj.save()
 
