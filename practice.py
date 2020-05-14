@@ -121,4 +121,8 @@ def retrieve_major(semver):
 #     return JsonResponse({'validation':'enter valid store city,must be a string'})
 # elif type(store_state) != str:
 #     return JsonResponse({'validation':'enter valid store state,must be a string'})
+def validmobilenumber(mobileno):return(True if type(mobileno)!=str or mobileno=='' or mobileno==None or len(mobileno)!=10 else False)
 
+a='2314567890'
+
+print(validmobilenumber(a))
